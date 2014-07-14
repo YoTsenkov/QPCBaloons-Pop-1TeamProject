@@ -7,35 +7,15 @@
         private const int NUMBER_OF_ROWS = 5;
         private const int NUMBER_OF_COLUMNS = 10;
         private const int NUMBER_OF_BALLOON_COLORS = 4;
-
-        private int numberOfTurn;
+        
         private int[,] balloons;
 
         public BalloonsContainer()
-        {
-            this.NumberOfTurn = 0;
+        {            
             this.Balloons = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
             this.Fill();
             this.Display();
-        }
-
-        public int NumberOfTurn
-        {
-            get
-            {
-                return this.numberOfTurn;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Number of turn must be bigger than zero");
-                }
-
-                this.numberOfTurn = value;
-            }
-        }
+        }        
 
         public int[,] Balloons
         {
@@ -104,8 +84,7 @@
                 Console.WriteLine("Invalid Move! Can not pop a baloon at that place!!");
             }
             else
-            {
-                this.NumberOfTurn++;
+            {                
                 int state = this.Balloons[row - 1, column - 1];
                 int top = row - 1;
                 int bottom = row - 1;

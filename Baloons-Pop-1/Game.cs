@@ -1,35 +1,37 @@
 ﻿namespace BalloonsPopsGame
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     class Game
     {
-        BalloonsContainer balloons;
-        List<Tuple<string, int>> scoreboard;
+        private BalloonsContainer balloons;
+        private int numberOfTurn;
 
         public Game()
         {
+            this.NumberOfTurn = 0;
             balloons = new BalloonsContainer();
-            scoreboard = new List<Tuple<string, int>>();
+            this.Scoreboard = new ScoreBoard();
         }
 
-        void displayScoreboard()
-        {
-            if (scoreboard.Count == 0)
-            {
-                Console.WriteLine("The scoreboard is empty");
-            }
-            else
-            {
-                Console.WriteLine("Top performers:");
-                Action<Tuple<string, int>> print = (elem) =>
-                {
-                    Console.WriteLine(elem.Item1 + "  " + elem.Item2.ToString() + " turns ");
-                };
+        public ScoreBoard Scoreboard { get; set; }
 
-                scoreboard.ForEach(print);
+        public int NumberOfTurn
+        {
+            get
+            {
+                return this.numberOfTurn;
+            }
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Number of turn must be bigger than zero");
+                }
+
+                this.numberOfTurn = value;
             }
         }
 
@@ -46,7 +48,7 @@
             }
             else if (command == "top")
             {
-                displayScoreboard();
+                this.Scoreboard.Display();
             }
             else
             {
@@ -58,6 +60,7 @@
                 if (validRow && validColumn)
                 {
                     this.PopBallons(row, column);
+                    this.NumberOfTurn++;
                 }
                 else
                 {
@@ -74,42 +77,10 @@
 
             if (isGameOver)
             {
-                Console.WriteLine("Congratulations!!You popped all the baloons in" + balloons.NumberOfTurn + "moves!");
-                updateScoreboard();
+                Console.WriteLine("Congratulations!!You popped all the baloons in" + this.NumberOfTurn + "moves!");
+                this.Scoreboard.Update(this.NumberOfTurn);
                 Restart();
             }
-        }
-
-        private void updateScoreboard()
-        {
-            Action<int> add = count =>//function to get the player name and add a tuple to the scoreboard
-            {
-                Console.WriteLine("Enter Name:");
-                string s = Console.ReadLine();
-                Tuple<string, int> a = Tuple.Create<string, int>(s, count);
-                scoreboard.Add(a);
-            };
-
-            if (scoreboard.Count < 5)
-            {
-                add(balloons.NumberOfTurn);
-                return;
-            }
-            else
-            {
-                if (scoreboard.ElementAt<Tuple<string, int>>(4).Item2 >= balloons.NumberOfTurn)
-                {
-                    add(balloons.NumberOfTurn);
-                    scoreboard.RemoveRange(4, 1);//if the new name replaces one of the old ones, remove the old one
-                }
-            }
-
-            scoreboard.Sort(delegate(Tuple<string, int> p1, Tuple<string, int> p2)//re-sort the list
-                      {
-                          return p1.Item2.CompareTo(p2.Item2);
-                      });
-
-            balloons = new BalloonsContainer();
         }
 
         private void Restart()

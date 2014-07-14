@@ -8,8 +8,8 @@
     <ProjectGuid>{8940EF8B-A71D-4F14-8888-1AAE9ACEFDC6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PoppingBaloons</RootNamespace>
-    <AssemblyName>PoppingBaloons</AssemblyName>
+    <RootNamespace>BalloonsPopsGame</RootNamespace>
+    <AssemblyName>BalloonsPopsGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -46,6 +46,7 @@
     <Compile Include="BalloonsContainer.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ScoreBoard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
