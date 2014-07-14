@@ -33,64 +33,51 @@
             }
         }
 
-        public void executeCommand(string s)
+        public void ExecuteCommand(string command)
         {
-            if (s == "exit")
+            if (command == "exit")
             {
                 Console.WriteLine("Thanks for playing!!");
                 Environment.Exit(0);
             }
+            else if (command == "restart")
+            {
+                Restart();
+            }
+            else if (command == "top")
+            {
+                displayScoreboard();
+            }
             else
-                if (s == "restart")
+            {
+                var rowsAndCols = command.Split();
+                int row, column;
+                bool validRow = int.TryParse(rowsAndCols[0], out row);
+                bool validColumn = int.TryParse(rowsAndCols[1], out column);
+
+                if (validRow && validColumn)
                 {
-                    Restart();
+                    this.PopBallons(row, column);
                 }
                 else
                 {
-                    if (s.Length == 3)
-                    {
-                        if (s == "top")
-                        {
-                            displayScoreboard();
-                        }
-                        else
-                        {//check input validation
-                            int fst, snd;
-                            bool first = Int32.TryParse(s.Remove(1), out fst);
-                            bool second = Int32.TryParse(s.Remove(0, 1), out snd);
-                            if (first && second)
-                            {
-                                sendCommand(fst, snd);//sends command to the baloonsState game holder
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Unknown Command");
-                    }
+                    Console.WriteLine("Unknown Command");
                 }
+            }
         }
 
-        private void sendCommand(int fst, int snd)
+        private void PopBallons(int row, int column)
         {
-            bool end = false;
-            if (fst > 5)
-            {
-                Console.WriteLine("Indexes too big");
-            }
+            bool isGameOver = false;
+            this.balloons.PopBaloons(row + 1, column + 1);
+            isGameOver = this.balloons.IsContainerEmpty();
 
-            else
-            {
-                end = balloons.PopBaloons(fst + 1, snd + 1);//if this turn ends the game, try to update the scoreboard
-            }
-
-            if (end)
+            if (isGameOver)
             {
                 Console.WriteLine("Congratulations!!You popped all the baloons in" + balloons.NumberOfTurn + "moves!");
+                updateScoreboard();
+                Restart();
             }
-
-            updateScoreboard();
-            Restart();
         }
 
         private void updateScoreboard()
