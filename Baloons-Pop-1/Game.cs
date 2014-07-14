@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PoppingBaloons
+﻿namespace BalloonsPopsGame
 {
-    class GameState
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    class Game
     {
-        baloonsState __st;
+        BalloonsContainer balloons;
         List<Tuple<string, int>> scoreboard;
 
-        public GameState()
+        public Game()
         {
-            __st = new baloonsState();
+            balloons = new BalloonsContainer();
             scoreboard = new List<Tuple<string, int>>();
-        }
-
-        ~GameState() 
-        { 
         }
 
         void displayScoreboard()
@@ -29,7 +24,11 @@ namespace PoppingBaloons
             else
             {
                 Console.WriteLine("Top performers:");
-                Action<Tuple<string, int>> print = elem => { Console.WriteLine(elem.Item1 + "  " + elem.Item2.ToString() + " turns "); };
+                Action<Tuple<string, int>> print = (elem) =>
+                {
+                    Console.WriteLine(elem.Item1 + "  " + elem.Item2.ToString() + " turns ");
+                };
+
                 scoreboard.ForEach(print);
             }
         }
@@ -44,7 +43,7 @@ namespace PoppingBaloons
             else
                 if (s == "restart")
                 {
-                    restart();
+                    Restart();
                 }
                 else
                 {
@@ -82,16 +81,16 @@ namespace PoppingBaloons
 
             else
             {
-                end = __st.popBaloon(fst + 1, snd + 1);//if this turn ends the game, try to update the scoreboard
+                end = balloons.PopBaloons(fst + 1, snd + 1);//if this turn ends the game, try to update the scoreboard
             }
 
             if (end)
             {
-                Console.WriteLine("Congratulations!!You popped all the baloons in" + __st.cnt + "moves!");
+                Console.WriteLine("Congratulations!!You popped all the baloons in" + balloons.NumberOfTurn + "moves!");
             }
 
             updateScoreboard();
-            restart();
+            Restart();
         }
 
         private void updateScoreboard()
@@ -106,14 +105,14 @@ namespace PoppingBaloons
 
             if (scoreboard.Count < 5)
             {
-                add(__st.cnt);
+                add(balloons.NumberOfTurn);
                 return;
             }
             else
             {
-                if (scoreboard.ElementAt<Tuple<string, int>>(4).Item2 >= __st.cnt)
+                if (scoreboard.ElementAt<Tuple<string, int>>(4).Item2 >= balloons.NumberOfTurn)
                 {
-                    add(__st.cnt);
+                    add(balloons.NumberOfTurn);
                     scoreboard.RemoveRange(4, 1);//if the new name replaces one of the old ones, remove the old one
                 }
             }
@@ -123,12 +122,12 @@ namespace PoppingBaloons
                           return p1.Item2.CompareTo(p2.Item2);
                       });
 
-            __st = new baloonsState();
+            balloons = new BalloonsContainer();
         }
 
-        private void restart()
+        private void Restart()
         {
-            __st = new baloonsState();
+            balloons = new BalloonsContainer();
         }
     }
 }

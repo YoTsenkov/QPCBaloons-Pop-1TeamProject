@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PoppingBaloons
+﻿namespace BalloonsPopsGame
 {
+    using System;
+
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to “Balloons Pops” game. Please try to pop the balloons.");
             Console.WriteLine(" Use 'top' to view the top scoreboard, 'restart' to start a new game and 'exit' to quit the game.");
-            GameState game=new GameState();
+            Game game = new Game();
 
-            while(true)
+            while (true)
             {
                 game.executeCommand(Console.ReadLine());
             }
