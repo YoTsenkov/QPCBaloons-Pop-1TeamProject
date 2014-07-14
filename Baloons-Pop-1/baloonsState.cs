@@ -22,33 +22,32 @@ namespace PoppingBaloons
                     poleto[i, j] = rnd.Next(1, 5);
                 }
             }
+
             printArray();
         }
+
         ~baloonsState()
         {
 
         }
+
         char pr(int a)
         {
             switch (a)
             {
                 case 1:
                     return '1';
-
                 case 2:
                     return '2';
-
                 case 3:
                     return '3';
-
                 case 4:
                     return '4';
-
                 default:
                     return '-';
-
             }
         }
+
         public bool popBaloon(int x, int y)
         {
             //changes the game state and returns boolean,indicating wheater the game is over
@@ -74,10 +73,12 @@ namespace PoppingBaloons
                 {
                     bottom++;
                 }
+
                 while (left > 0 && poleto[x - 1, left - 1] == state)
                 {
                     left--;
                 }
+
                 while (right < 9 && poleto[x - 1, right + 1] == state)
                 {
                     right++;
@@ -87,9 +88,10 @@ namespace PoppingBaloons
                 {
 
                     //first remove the elements on the same row and float the elemnts above down
-                    if (x == 1)
+                    if (x == 1) 
+                    {
                         poleto[x - 1, i] = 0;
-
+                    }                       
                     else
                     {
                         for (int j = x - 1; j > 0; j--)
@@ -115,6 +117,7 @@ namespace PoppingBaloons
                         poleto[i + bottom - top, y - 1] = poleto[i, y - 1];
                         poleto[i, y - 1] = 0;
                     }
+
                     if (bottom - top > top - 1)
                     {   //is there are more baloons to pop in the column than elements above them, need to pop them as well
                         for (int i = top; i <= bottom; i++)
@@ -124,6 +127,7 @@ namespace PoppingBaloons
                         }
                     }
                 }
+
                 Console.WriteLine();
                 this.printArray();
                 Console.WriteLine();
@@ -137,10 +141,14 @@ namespace PoppingBaloons
             foreach (var s in poleto)
             {
                 if (s != 0)
+                {
                     return false;
+                }                    
             }
+
             return true;
         }
+
         public void printArray()
         {
             Console.WriteLine("    0 1 2 3 4 5 6 7 8 9");
@@ -149,17 +157,16 @@ namespace PoppingBaloons
             {
                 Console.Write(i.ToString() + " | ");
                 for (int j = 0; j < 10; j++)
+                {
                     Console.Write(pr(poleto[i, j]) + " ");
+                }
+                    
                 Console.WriteLine("| ");
-
-
-
             }
+
             Console.WriteLine("    --------------------");
             Console.WriteLine("Insert row and column or other command");
         }
     }
-
-
 }
 
