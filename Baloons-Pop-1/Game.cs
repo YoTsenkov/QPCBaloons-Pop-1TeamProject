@@ -5,14 +5,23 @@
 
     class Game
     {
+        private static readonly Game game = new Game();
         private BalloonsContainer balloons;
         private int numberOfTurn;
 
-        public Game()
+        private Game()
         {
             this.NumberOfTurn = 0;
             balloons = new BalloonsContainer();
             this.Scoreboard = new ScoreBoard();
+        }
+
+        public static Game Instance
+        {
+            get
+            {
+                return game;
+            }
         }
 
         public ScoreBoard Scoreboard { get; set; }
@@ -53,18 +62,26 @@
             else
             {
                 var rowsAndCols = command.Split();
-                int row, column;
-                bool validRow = int.TryParse(rowsAndCols[0], out row);
-                bool validColumn = int.TryParse(rowsAndCols[1], out column);
 
-                if (validRow && validColumn)
+                if (rowsAndCols.Length != 2)
                 {
-                    this.PopBallons(row, column);
-                    this.NumberOfTurn++;
+                    Console.WriteLine("Unknown Command");
                 }
                 else
                 {
-                    Console.WriteLine("Unknown Command");
+                    int row, column;
+                    bool validRow = int.TryParse(rowsAndCols[0], out row);
+                    bool validColumn = int.TryParse(rowsAndCols[1], out column);
+
+                    if (validRow && validColumn)
+                    {
+                        this.PopBallons(row, column);
+                        this.NumberOfTurn++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unknown Command");
+                    }
                 }
             }
         }
