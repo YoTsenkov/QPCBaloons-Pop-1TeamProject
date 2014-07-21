@@ -2,43 +2,57 @@
 {
     using System;
 
-    class BalloonsContainer
+    public class BalloonsContainer
     {
-        private const int NUMBER_OF_ROWS = 5;
-        private const int NUMBER_OF_COLUMNS = 10;
-        private const int NUMBER_OF_BALLOON_COLORS = 4;
-
-        private static RedBalloonCreator redBalloonCreator = new RedBalloonCreator();
-        private static BlueBalloonCreator blueBalloonCreator = new BlueBalloonCreator();
-        private static GreenBalloonCreator greenBalloonCreator = new GreenBalloonCreator();
-        private static YellowBalloonCreator yellowBalloonCreator = new YellowBalloonCreator();
-        private static PoppedBalloonCreator poppedBallonCreator = new PoppedBalloonCreator();
+        private const int NumberOfRows = 5;
+        private const int NumberOfColumns = 10;
+        private const int NumberOfBalloonColors = 4;
 
         private Balloon[,] balloons;
+        private IBalloonFactory factory;
 
-        public BalloonsContainer()
+        public BalloonsContainer(IBalloonFactory factory)
         {
-            this.Balloons = new Balloon[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+            this.Balloons = new Balloon[NumberOfRows, NumberOfColumns];
+            this.Factory = factory;
             this.Fill();
             this.Display();
+        }
+
+        public IBalloonFactory Factory
+        {
+            get
+            {
+                return this.factory;
+            }
+
+            private set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("factory", "Factory mustn't be null!");
+                }
+
+                this.factory = value;
+            }
         }
 
         public Balloon[,] Balloons
         {
             private get
             {
+                // TODO: Deside if we should use return (int[,])this.balloons.Clone();
                 return this.balloons;
-                //return (int[,])this.balloons.Clone();
             }
 
             set
             {
-                if (value.GetLength(0) != NUMBER_OF_ROWS)
+                if (value.GetLength(0) != NumberOfRows)
                 {
                     throw new ArgumentException("Invalid number of rows for container!");
                 }
 
-                if (value.GetLength(1) != NUMBER_OF_COLUMNS)
+                if (value.GetLength(1) != NumberOfColumns)
                 {
                     throw new ArgumentException("Invalid number of columns for container!");
                 }
@@ -51,10 +65,10 @@
         {
             Console.WriteLine("    0 1 2 3 4 5 6 7 8 9");
             Console.WriteLine("    --------------------");
-            for (int i = 0; i < NUMBER_OF_ROWS; i++)
+            for (int i = 0; i < NumberOfRows; i++)
             {
                 Console.Write(i.ToString() + " | ");
-                for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                for (int j = 0; j < NumberOfColumns; j++)
                 {
                     Console.Write(ConvertBalloonToChar(Balloons[i, j]) + " ");
                 }
@@ -81,11 +95,11 @@
 
         public void PopBaloons(int row, int column)
         {
-            if (row > NUMBER_OF_ROWS || column > NUMBER_OF_COLUMNS)
+            if (row > NumberOfRows || column > NumberOfColumns)
             {
                 Console.WriteLine("Invalid balloon position!");
             }
-            else if (this.Balloons[row - 1, column - 1] == poppedBallonCreator.CreateBalloon())
+            else if (this.Balloons[row - 1, column - 1] == this.Factory.GetBalloon(BalloonType.Popped))
             {
                 Console.WriteLine("Invalid Move! Can not pop a baloon at that place!!");
             }
@@ -102,7 +116,7 @@
                     top--;
                 }
 
-                while (bottom < (NUMBER_OF_ROWS - 1) && this.Balloons[bottom + 1, column - 1] == state)
+                while (bottom < (NumberOfRows - 1) && this.Balloons[bottom + 1, column - 1] == state)
                 {
                     bottom++;
                 }
@@ -112,7 +126,7 @@
                     left--;
                 }
 
-                while (right < (NUMBER_OF_COLUMNS - 1) && this.Balloons[row - 1, right + 1] == state)
+                while (right < (NumberOfColumns - 1) && this.Balloons[row - 1, right + 1] == state)
                 {
                     right++;
                 }
@@ -122,14 +136,14 @@
                     //first remove the elements on the same row and float the elemnts above down
                     if (row == 1)
                     {
-                        this.Balloons[row - 1, currentCol] = poppedBallonCreator.CreateBalloon();
+                        this.Balloons[row - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
                     }
                     else
                     {
                         for (int currentRow = row - 1; currentRow > 0; currentRow--)
                         {
                             this.Balloons[currentRow, currentCol] = this.Balloons[currentRow - 1, currentCol];
-                            this.Balloons[currentRow - 1, currentCol] = poppedBallonCreator.CreateBalloon();
+                            this.Balloons[currentRow - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
                         }
                     }
                 }
@@ -138,18 +152,20 @@
                 {
                     //fix the problematic column as well
                     for (int i = top; i > 0; --i)
-                    {//first float the elements above down and replace them
+                    {
+                        //first float the elements above down and replace them
                         this.Balloons[i + bottom - top, column - 1] = this.Balloons[i, column - 1];
-                        this.Balloons[i, column - 1] = poppedBallonCreator.CreateBalloon();
+                        this.Balloons[i, column - 1] = this.Factory.GetBalloon(BalloonType.Popped);
                     }
 
                     if (bottom - top > top - 1)
-                    {   //is there are more baloons to pop in the column than elements above them, need to pop them as well
+                    {
+                        //is there are more baloons to pop in the column than elements above them, need to pop them as well
                         for (int i = top; i <= bottom; i++)
                         {
                             if (this.Balloons[i, column - 1] == state)
                             {
-                                this.Balloons[i, column - 1] = poppedBallonCreator.CreateBalloon();
+                                this.Balloons[i, column - 1] = this.Factory.GetBalloon(BalloonType.Popped);
                             }
                         }
                     }
@@ -165,30 +181,11 @@
         {
             Random rnd = new Random();
 
-            for (int i = 0; i < NUMBER_OF_ROWS; i++)
+            for (int i = 0; i < NumberOfRows; i++)
             {
-                for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
+                for (int j = 0; j < NumberOfColumns; j++)
                 {
-                    Balloon newBalloon;
-
-                    switch (rnd.Next(1, NUMBER_OF_BALLOON_COLORS + 1))
-                    {
-                        case 1:
-                            newBalloon = redBalloonCreator.CreateBalloon();
-                            break;
-                        case 2:
-                            newBalloon = greenBalloonCreator.CreateBalloon();
-                            break;
-                        case 3:
-                            newBalloon = blueBalloonCreator.CreateBalloon();
-                            break;
-                        case 4:
-                            newBalloon = yellowBalloonCreator.CreateBalloon();
-                            break;
-                        default:
-                            throw new ArgumentException("Invalid balloon!");
-                            break;
-                    }
+                    Balloon newBalloon = this.Factory.GetBalloon((BalloonType)rnd.Next(0, NumberOfBalloonColors));
 
                     this.Balloons[i, j] = newBalloon;
                 }

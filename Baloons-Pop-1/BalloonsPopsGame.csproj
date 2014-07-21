@@ -45,12 +45,15 @@
   <ItemGroup>
     <Compile Include="Balloon.cs" />
     <Compile Include="BalloonCreator.cs" />
+    <Compile Include="BalloonFactory.cs" />
     <Compile Include="BalloonsContainer.cs" />
     <Compile Include="BlueBalloon.cs" />
     <Compile Include="BlueBalloonCreator.cs" />
+    <Compile Include="BalloonType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GreenBalloon.cs" />
     <Compile Include="GreenBalloonCreator.cs" />
+    <Compile Include="IBalloonFactory.cs" />
     <Compile Include="PoppedBalloon.cs" />
     <Compile Include="PoppedBalloonCreator.cs" />
     <Compile Include="Program.cs" />
