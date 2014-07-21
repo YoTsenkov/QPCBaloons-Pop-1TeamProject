@@ -43,25 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Balloon.cs" />
-    <Compile Include="BalloonCreator.cs" />
-    <Compile Include="BalloonFactory.cs" />
-    <Compile Include="BalloonsContainer.cs" />
-    <Compile Include="BlueBalloon.cs" />
-    <Compile Include="BlueBalloonCreator.cs" />
-    <Compile Include="BalloonType.cs" />
+    <Compile Include="Balloons\Balloon.cs" />
+    <Compile Include="Balloons\Creator\BalloonCreator.cs" />
+    <Compile Include="Balloons\BalloonFactory.cs" />
+    <Compile Include="Balloons\BalloonsContainer.cs" />
+    <Compile Include="Balloons\BlueBalloon.cs" />
+    <Compile Include="Balloons\Creator\BlueBalloonCreator.cs" />
+    <Compile Include="Balloons\BalloonType.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="GreenBalloon.cs" />
-    <Compile Include="GreenBalloonCreator.cs" />
-    <Compile Include="IBalloonFactory.cs" />
-    <Compile Include="PoppedBalloon.cs" />
-    <Compile Include="PoppedBalloonCreator.cs" />
+    <Compile Include="Balloons\GreenBalloon.cs" />
+    <Compile Include="Balloons\Creator\GreenBalloonCreator.cs" />
+    <Compile Include="Balloons\IBalloonFactory.cs" />
+    <Compile Include="Balloons\PoppedBalloon.cs" />
+    <Compile Include="Balloons\Creator\PoppedBalloonCreator.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="RedBalloon.cs" />
-    <Compile Include="RedBalloonCreator.cs" />
+    <Compile Include="Balloons\RedBalloon.cs" />
+    <Compile Include="Balloons\Creator\RedBalloonCreator.cs" />
     <Compile Include="ScoreBoard.cs" />
-    <Compile Include="YellowBalloon.cs" />
-    <Compile Include="YellowBalloonCreator.cs" />
+    <Compile Include="Balloons\YellowBalloon.cs" />
+    <Compile Include="Balloons\Creator\YellowBalloonCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

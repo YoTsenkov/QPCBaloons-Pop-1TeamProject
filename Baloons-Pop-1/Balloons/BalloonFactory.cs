@@ -1,6 +1,7 @@
-﻿namespace BalloonsPopsGame
-{
+﻿namespace BalloonsPopsGame.Balloons
+{    
     using System;
+    using Creator;
     using System.Collections.Generic;
 
     public class BalloonFactory : IBalloonFactory

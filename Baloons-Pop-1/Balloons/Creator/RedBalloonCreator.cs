@@ -1,5 +1,5 @@
-﻿namespace BalloonsPopsGame
-{
+﻿namespace BalloonsPopsGame.Balloons.Creator
+{    
     public class RedBalloonCreator : BalloonCreator
     {
         public override Balloon CreateBalloon()

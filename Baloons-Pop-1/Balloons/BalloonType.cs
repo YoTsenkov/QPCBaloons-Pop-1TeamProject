@@ -1,4 +1,4 @@
-﻿namespace BalloonsPopsGame
+﻿namespace BalloonsPopsGame.Balloons
 {
     public enum BalloonType
     {

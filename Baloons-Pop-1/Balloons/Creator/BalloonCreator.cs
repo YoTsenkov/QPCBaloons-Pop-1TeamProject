@@ -1,4 +1,4 @@
-﻿namespace BalloonsPopsGame
+﻿namespace BalloonsPopsGame.Balloons.Creator
 {
     public abstract class BalloonCreator
     {
