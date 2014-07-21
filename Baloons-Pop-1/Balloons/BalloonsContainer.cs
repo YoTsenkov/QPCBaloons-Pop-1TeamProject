@@ -10,13 +10,33 @@
 
         private Balloon[,] balloons;
         private IBalloonFactory factory;
+        private IRandomNumberProvider randomNumberProvider;
 
-        public BalloonsContainer(IBalloonFactory factory)
+        public BalloonsContainer(IBalloonFactory factory, IRandomNumberProvider randomNumberProvider)
         {
             this.Balloons = new Balloon[NumberOfRows, NumberOfColumns];
             this.Factory = factory;
+            this.RandomNumberProvider = randomNumberProvider;
             this.Fill();
             this.Display();
+        }
+
+        public IRandomNumberProvider RandomNumberProvider
+        {
+            get
+            {
+                return this.randomNumberProvider;
+            }
+
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("RandomNumberProvider", "RandomNumberProvider cannot be null!");
+                }
+
+                this.randomNumberProvider = value;
+            }
         }
 
         public IBalloonFactory Factory
@@ -37,14 +57,14 @@
             }
         }
 
-        public Balloon[,] Balloons
+        private Balloon[,] Balloons
         {
             get
             {
-                return (Balloon[,])this.balloons.Clone();
+                return this.balloons;
             }
 
-            private set
+            set
             {
                 if (value.GetLength(0) != NumberOfRows)
                 {
@@ -98,7 +118,7 @@
             {
                 Console.WriteLine("Invalid balloon position!");
             }
-            else if (this.balloons[row - 1, column - 1] == this.Factory.GetBalloon(BalloonType.Popped))
+            else if (this.Balloons[row - 1, column - 1] == this.Factory.GetBalloon(BalloonType.Popped))
             {
                 Console.WriteLine("Invalid Move! Can not pop a baloon at that place!!");
             }
@@ -135,14 +155,14 @@
                     //first remove the elements on the same row and float the elemnts above down
                     if (row == 1)
                     {
-                        this.balloons[row - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
+                        this.Balloons[row - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
                     }
                     else
                     {
                         for (int currentRow = row - 1; currentRow > 0; currentRow--)
                         {
-                            this.balloons[currentRow, currentCol] = this.Balloons[currentRow - 1, currentCol];
-                            this.balloons[currentRow - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
+                            this.Balloons[currentRow, currentCol] = this.Balloons[currentRow - 1, currentCol];
+                            this.Balloons[currentRow - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
                         }
                     }
                 }
@@ -153,8 +173,8 @@
                     for (int i = top; i > 0; --i)
                     {
                         //first float the elements above down and replace them
-                        this.balloons[i + bottom - top, column - 1] = this.Balloons[i, column - 1];
-                        this.balloons[i, column - 1] = this.Factory.GetBalloon(BalloonType.Popped);
+                        this.Balloons[i + bottom - top, column - 1] = this.Balloons[i, column - 1];
+                        this.Balloons[i, column - 1] = this.Factory.GetBalloon(BalloonType.Popped);
                     }
 
                     if (bottom - top > top - 1)
@@ -162,9 +182,9 @@
                         //is there are more baloons to pop in the column than elements above them, need to pop them as well
                         for (int i = top; i <= bottom; i++)
                         {
-                            if (this.balloons[i, column - 1] == state)
+                            if (this.Balloons[i, column - 1] == state)
                             {
-                                this.balloons[i, column - 1] = this.Factory.GetBalloon(BalloonType.Popped);
+                                this.Balloons[i, column - 1] = this.Factory.GetBalloon(BalloonType.Popped);
                             }
                         }
                     }
@@ -176,17 +196,15 @@
             }
         }
 
-        private void Fill()
+        public void Fill()
         {
-            Random rnd = new Random();
-
             for (int i = 0; i < NumberOfRows; i++)
             {
                 for (int j = 0; j < NumberOfColumns; j++)
                 {
-                    Balloon newBalloon = this.Factory.GetBalloon((BalloonType)rnd.Next(0, NumberOfBalloonColors));
+                    Balloon newBalloon = this.Factory.GetBalloon((BalloonType)this.RandomNumberProvider.GetRandomNumber(0, NumberOfBalloonColors - 1));
 
-                    this.balloons[i, j] = newBalloon;
+                    this.Balloons[i, j] = newBalloon;
                 }
             }
         }

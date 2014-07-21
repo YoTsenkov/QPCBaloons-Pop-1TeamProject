@@ -13,7 +13,7 @@
         private Game()
         {
             this.NumberOfTurn = 0;
-            balloons = new BalloonsContainer(new BalloonFactory());
+            balloons = new BalloonsContainer(new BalloonFactory(), new StandardRandomNumberProvider());
             this.Scoreboard = new ScoreBoard();
         }
 
@@ -103,7 +103,7 @@
 
         private void Restart()
         {
-            balloons = new BalloonsContainer(new BalloonFactory());
+            balloons = new BalloonsContainer(new BalloonFactory(), new StandardRandomNumberProvider());
         }
     }
 }

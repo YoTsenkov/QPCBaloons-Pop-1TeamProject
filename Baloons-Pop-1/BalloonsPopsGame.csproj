@@ -56,12 +56,14 @@
     <Compile Include="Balloons\IBalloonFactory.cs" />
     <Compile Include="Balloons\PoppedBalloon.cs" />
     <Compile Include="Balloons\Creator\PoppedBalloonCreator.cs" />
+    <Compile Include="IRandomNumberProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Balloons\RedBalloon.cs" />
     <Compile Include="Balloons\Creator\RedBalloonCreator.cs" />
     <Compile Include="ScoreBoard.cs" />
     <Compile Include="Balloons\YellowBalloon.cs" />
     <Compile Include="Balloons\Creator\YellowBalloonCreator.cs" />
+    <Compile Include="StandardRandomNumberProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
