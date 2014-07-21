@@ -43,10 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Balloon.cs" />
+    <Compile Include="BalloonCreator.cs" />
     <Compile Include="BalloonsContainer.cs" />
+    <Compile Include="BlueBalloon.cs" />
+    <Compile Include="BlueBalloonCreator.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GreenBalloon.cs" />
+    <Compile Include="GreenBalloonCreator.cs" />
+    <Compile Include="PoppedBalloon.cs" />
+    <Compile Include="PoppedBalloonCreator.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="RedBalloon.cs" />
+    <Compile Include="RedBalloonCreator.cs" />
     <Compile Include="ScoreBoard.cs" />
+    <Compile Include="YellowBalloon.cs" />
+    <Compile Include="YellowBalloonCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

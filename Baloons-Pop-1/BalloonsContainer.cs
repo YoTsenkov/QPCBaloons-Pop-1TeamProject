@@ -7,17 +7,23 @@
         private const int NUMBER_OF_ROWS = 5;
         private const int NUMBER_OF_COLUMNS = 10;
         private const int NUMBER_OF_BALLOON_COLORS = 4;
-        
-        private int[,] balloons;
+
+        private static RedBalloonCreator redBalloonCreator = new RedBalloonCreator();
+        private static BlueBalloonCreator blueBalloonCreator = new BlueBalloonCreator();
+        private static GreenBalloonCreator greenBalloonCreator = new GreenBalloonCreator();
+        private static YellowBalloonCreator yellowBalloonCreator = new YellowBalloonCreator();
+        private static PoppedBalloonCreator poppedBallonCreator = new PoppedBalloonCreator();
+
+        private Balloon[,] balloons;
 
         public BalloonsContainer()
-        {            
-            this.Balloons = new int[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+        {
+            this.Balloons = new Balloon[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
             this.Fill();
             this.Display();
-        }        
+        }
 
-        public int[,] Balloons
+        public Balloon[,] Balloons
         {
             private get
             {
@@ -64,7 +70,7 @@
         {
             foreach (var balloon in this.Balloons)
             {
-                if (balloon != 0)
+                if (balloon != null)
                 {
                     return false;
                 }
@@ -79,13 +85,13 @@
             {
                 Console.WriteLine("Invalid balloon position!");
             }
-            else if (this.Balloons[row - 1, column - 1] == 0)
+            else if (this.Balloons[row - 1, column - 1] == poppedBallonCreator.CreateBalloon())
             {
                 Console.WriteLine("Invalid Move! Can not pop a baloon at that place!!");
             }
             else
-            {                
-                int state = this.Balloons[row - 1, column - 1];
+            {
+                var state = this.Balloons[row - 1, column - 1];
                 int top = row - 1;
                 int bottom = row - 1;
                 int left = column - 1;
@@ -116,14 +122,14 @@
                     //first remove the elements on the same row and float the elemnts above down
                     if (row == 1)
                     {
-                        this.Balloons[row - 1, currentCol] = 0;
+                        this.Balloons[row - 1, currentCol] = poppedBallonCreator.CreateBalloon();
                     }
                     else
                     {
                         for (int currentRow = row - 1; currentRow > 0; currentRow--)
                         {
                             this.Balloons[currentRow, currentCol] = this.Balloons[currentRow - 1, currentCol];
-                            this.Balloons[currentRow - 1, currentCol] = 0;
+                            this.Balloons[currentRow - 1, currentCol] = poppedBallonCreator.CreateBalloon();
                         }
                     }
                 }
@@ -134,7 +140,7 @@
                     for (int i = top; i > 0; --i)
                     {//first float the elements above down and replace them
                         this.Balloons[i + bottom - top, column - 1] = this.Balloons[i, column - 1];
-                        this.Balloons[i, column - 1] = 0;
+                        this.Balloons[i, column - 1] = poppedBallonCreator.CreateBalloon();
                     }
 
                     if (bottom - top > top - 1)
@@ -143,7 +149,7 @@
                         {
                             if (this.Balloons[i, column - 1] == state)
                             {
-                                this.Balloons[i, column - 1] = 0;
+                                this.Balloons[i, column - 1] = poppedBallonCreator.CreateBalloon();
                             }
                         }
                     }
@@ -163,22 +169,43 @@
             {
                 for (int j = 0; j < NUMBER_OF_COLUMNS; j++)
                 {
-                    this.Balloons[i, j] = rnd.Next(1, NUMBER_OF_BALLOON_COLORS + 1);
+                    Balloon newBalloon;
+
+                    switch (rnd.Next(1, NUMBER_OF_BALLOON_COLORS + 1))
+                    {
+                        case 1:
+                            newBalloon = redBalloonCreator.CreateBalloon();
+                            break;
+                        case 2:
+                            newBalloon = greenBalloonCreator.CreateBalloon();
+                            break;
+                        case 3:
+                            newBalloon = blueBalloonCreator.CreateBalloon();
+                            break;
+                        case 4:
+                            newBalloon = yellowBalloonCreator.CreateBalloon();
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid balloon!");
+                            break;
+                    }
+
+                    this.Balloons[i, j] = newBalloon;
                 }
             }
         }
 
-        private char ConvertBalloonToChar(int balloon)
+        private char ConvertBalloonToChar(Balloon balloon)
         {
-            switch (balloon)
+            switch (balloon.GetType().Name)
             {
-                case 1:
+                case "RedBalloon":
                     return '1';
-                case 2:
+                case "GreenBalloon":
                     return '2';
-                case 3:
+                case "BlueBalloon":
                     return '3';
-                case 4:
+                case "YellowBalloon":
                     return '4';
                 default:
                     return '-';
