@@ -37,11 +37,11 @@
                     case BalloonType.Yellow:
                         balloon = yellowBalloonCreator.CreateBalloon();
                         break;
-                    case BalloonType.Popped:
+                    case BalloonType.Black:
                         balloon = poppedBallonCreator.CreateBalloon();
                         break;
                     default:
-                        throw new ArgumentException("No such balloon colour!");
+                        throw new ArgumentException("No such balloon color!");
                 }
 
                 this.balloons.Add(key, balloon);

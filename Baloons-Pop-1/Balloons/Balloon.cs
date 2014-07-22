@@ -4,6 +4,13 @@
 
     public abstract class Balloon : ICloneable
     {
+        public Balloon(BalloonType color)
+        {
+            this.Color = color;
+        }
+
+        public BalloonType Color { get; set; }
+
         public static bool operator ==(Balloon firstBalloon, Balloon secondBalloon)
         {
             return Balloon.Equals(firstBalloon, secondBalloon);
