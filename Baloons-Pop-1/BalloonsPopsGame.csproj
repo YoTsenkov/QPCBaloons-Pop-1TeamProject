@@ -51,6 +51,7 @@
     <Compile Include="Balloons\Creator\BlueBalloonCreator.cs" />
     <Compile Include="Balloons\BalloonType.cs" />
     <Compile Include="Balloons\IBalloonsContainer.cs" />
+    <Compile Include="UserInterface\ConsoleColorFactory.cs" />
     <Compile Include="UserInterface\ConsoleUIGenerator.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Balloons\GreenBalloon.cs" />

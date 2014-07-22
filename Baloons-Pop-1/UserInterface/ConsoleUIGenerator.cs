@@ -32,10 +32,9 @@
                     Console.Write((counter / BalloonsContainer.NumberOfColumns).ToString() + " | ");
                 }
 
-                // TODO: Make changing colors
-                // Console.BackgroundColor = this.MatchColor(balloon.Color);                
+                Console.ForegroundColor = ConsoleColorFactory.GetConsoleColor(balloon);
                 Console.Write(ConvertBalloonToChar(balloon) + " ");
-                // Console.BackgroundColor = ConsoleColor.Black;                
+                Console.ForegroundColor = ConsoleColor.White;
 
                 if (counter % BalloonsContainer.NumberOfColumns == BalloonsContainer.NumberOfColumns - 1)
                 {
@@ -45,7 +44,7 @@
                 counter++;
             }
 
-            this.DrawBottomBorder();            
+            this.DrawBottomBorder();
         }
 
         protected override void ContainerChanged(object sender, EventArgs e)
@@ -98,33 +97,6 @@
                 default:
                     return '-';
             }
-        }
-
-        private ConsoleColor MatchColor(BalloonType color)
-        {
-            ConsoleColor matchColor = ConsoleColor.Black;
-            switch (color)
-            {
-                case BalloonType.Red:
-                    matchColor = ConsoleColor.Red;
-                    break;
-                case BalloonType.Green:
-                    matchColor = ConsoleColor.Green;
-                    break;
-                case BalloonType.Blue:
-                    matchColor = ConsoleColor.Blue;
-                    break;
-                case BalloonType.Yellow:
-                    matchColor = ConsoleColor.Yellow;
-                    break;
-                case BalloonType.Popped:
-                    matchColor = ConsoleColor.Black;
-                    break;
-                default:
-                    throw new ArgumentException("Unknown colour type.");
-            }
-
-            return matchColor;
         }
     }
 }
