@@ -1,12 +1,14 @@
 ﻿namespace BalloonsPopsGame.Balloons
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
-    public class BalloonsContainer
+    public class BalloonsContainer : IBalloonsContainer, IEnumerable<Balloon>
     {
-        private const int NumberOfRows = 5;
-        private const int NumberOfColumns = 10;
-        private const int NumberOfBalloonColors = 4;
+        public const int NumberOfRows = 5;
+        public const int NumberOfColumns = 10;
+        public const int NumberOfBalloonColors = 4;
 
         private Balloon[,] balloons;
         private IBalloonFactory factory;
@@ -16,12 +18,12 @@
         {
             this.Balloons = new Balloon[NumberOfRows, NumberOfColumns];
             this.Factory = factory;
-            this.RandomNumberProvider = randomNumberProvider;
-            this.Fill();
-            this.Display();
+            this.RandomNumberProvider = randomNumberProvider;            
         }
 
-        public IRandomNumberProvider RandomNumberProvider
+        public event EventHandler ContainerChanged;
+
+        private IRandomNumberProvider RandomNumberProvider
         {
             get
             {
@@ -39,14 +41,14 @@
             }
         }
 
-        public IBalloonFactory Factory
+        private IBalloonFactory Factory
         {
             get
             {
                 return this.factory;
             }
 
-            private set
+            set
             {
                 if (value == null)
                 {
@@ -78,25 +80,6 @@
 
                 this.balloons = value;
             }
-        }
-
-        public void Display()
-        {
-            Console.WriteLine("    0 1 2 3 4 5 6 7 8 9");
-            Console.WriteLine("    --------------------");
-            for (int i = 0; i < NumberOfRows; i++)
-            {
-                Console.Write(i.ToString() + " | ");
-                for (int j = 0; j < NumberOfColumns; j++)
-                {
-                    Console.Write(ConvertBalloonToChar(Balloons[i, j]) + " ");
-                }
-
-                Console.WriteLine("| ");
-            }
-
-            Console.WriteLine("    --------------------");
-            Console.WriteLine("Insert row and column or other command");
         }
 
         public bool IsContainerEmpty()
@@ -190,9 +173,7 @@
                     }
                 }
 
-                Console.WriteLine();
-                this.Display();
-                Console.WriteLine();
+                this.OnContainerChanged();
             }
         }
 
@@ -207,22 +188,36 @@
                     this.Balloons[i, j] = newBalloon;
                 }
             }
+
+            this.OnContainerChanged();
         }
 
-        private char ConvertBalloonToChar(Balloon balloon)
+        public void Empty()
         {
-            switch (balloon.GetType().Name)
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<Balloon> GetEnumerator()
+        {
+            for (int row = 0; row < NumberOfRows; row++)
             {
-                case "RedBalloon":
-                    return '1';
-                case "GreenBalloon":
-                    return '2';
-                case "BlueBalloon":
-                    return '3';
-                case "YellowBalloon":
-                    return '4';
-                default:
-                    return '-';
+                for (int col = 0; col < NumberOfColumns; col++)
+                {
+                    yield return this.Balloons[row, col].Clone();
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        protected void OnContainerChanged()
+        {
+            if (this.ContainerChanged != null)
+            {
+                this.ContainerChanged(this, new EventArgs());
             }
         }
     }

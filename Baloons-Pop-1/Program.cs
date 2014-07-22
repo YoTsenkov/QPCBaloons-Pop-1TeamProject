@@ -1,6 +1,7 @@
 ﻿namespace BalloonsPopsGame
 {
     using System;
+    using Balloons;
 
     class Program
     {

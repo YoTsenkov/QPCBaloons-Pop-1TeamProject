@@ -50,6 +50,8 @@
     <Compile Include="Balloons\BlueBalloon.cs" />
     <Compile Include="Balloons\Creator\BlueBalloonCreator.cs" />
     <Compile Include="Balloons\BalloonType.cs" />
+    <Compile Include="Balloons\IBalloonsContainer.cs" />
+    <Compile Include="ConsoleUIGenerator.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Balloons\GreenBalloon.cs" />
     <Compile Include="Balloons\Creator\GreenBalloonCreator.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Balloons\YellowBalloon.cs" />
     <Compile Include="Balloons\Creator\YellowBalloonCreator.cs" />
     <Compile Include="StandardRandomNumberProvider.cs" />
+    <Compile Include="UIGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
