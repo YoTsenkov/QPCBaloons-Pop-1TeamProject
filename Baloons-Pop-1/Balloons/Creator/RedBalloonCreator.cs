@@ -1,11 +1,10 @@
-﻿using System;
-namespace BalloonsPopsGame.Balloons.Creator
+﻿namespace BalloonsPopsGame.Balloons.Creator
 {    
     public class RedBalloonCreator : BalloonCreator
     {
         public override Balloon CreateBalloon()
         {
-            var redBalloon = new RedBalloon(BalloonType.Red);
+            var redBalloon = new RedBalloon();
             return redBalloon;
         }
     }

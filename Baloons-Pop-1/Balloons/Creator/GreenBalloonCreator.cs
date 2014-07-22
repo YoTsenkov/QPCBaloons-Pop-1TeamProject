@@ -4,7 +4,7 @@
     {
         public override Balloon CreateBalloon()
         {
-            var greenBalloon = new GreenBalloon(BalloonType.Green);
+            var greenBalloon = new GreenBalloon();
             return greenBalloon;
         }
     }

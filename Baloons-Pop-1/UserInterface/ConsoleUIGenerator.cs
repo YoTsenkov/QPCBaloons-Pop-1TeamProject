@@ -1,20 +1,29 @@
-﻿namespace BalloonsPopsGame
+﻿namespace BalloonsPopsGame.UserInterface
 {
     using System;
     using Balloons;
+    using System.Text;
 
     public class ConsoleUIGenerator : UIGenerator
     {
-        public ConsoleUIGenerator(BalloonsContainer container) : base(container)
+        public ConsoleUIGenerator(BalloonsContainer container)
+            : base(container)
         {
+        }
+
+        public override void DisplayMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public override void DisplayMessage(string message, int moves)
+        {
+            Console.WriteLine(message, moves);
         }
 
         protected override void DisplayBalloons()
         {
-            Console.WriteLine();
-            Console.WriteLine("     0   1   2   3   4   5   6   7   8   9");
-            Console.WriteLine(new String(' ',4) + new String('-',40));
-
+            this.DrawUpperBorder();
             int counter = 0;
             foreach (var balloon in this.Container)
             {
@@ -22,27 +31,56 @@
                 {
                     Console.Write((counter / BalloonsContainer.NumberOfColumns).ToString() + " | ");
                 }
-                Console.BackgroundColor = this.MatchColor(balloon.Color);
-                Console.Write(" " + ConvertBalloonToChar(balloon) + " ");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.Write(' ');
+
+                // TODO: Make changing colors
+                // Console.BackgroundColor = this.MatchColor(balloon.Color);                
+                Console.Write(ConvertBalloonToChar(balloon) + " ");
+                // Console.BackgroundColor = ConsoleColor.Black;                
 
                 if (counter % BalloonsContainer.NumberOfColumns == BalloonsContainer.NumberOfColumns - 1)
                 {
-                    Console.WriteLine("|");
-                    Console.WriteLine();
+                    Console.WriteLine("| ");
                 }
 
                 counter++;
             }
 
-            Console.WriteLine(new String(' ', 4) + new String('-', 40));
-            Console.WriteLine("Insert row and column or other command");
+            this.DrawBottomBorder();            
         }
 
-        protected override void ContainerContainerChanged(object sender, EventArgs e)
+        protected override void ContainerChanged(object sender, EventArgs e)
         {
             this.DisplayBalloons();
+        }
+
+        private void DrawUpperBorder()
+        {
+            StringBuilder border = new StringBuilder();
+            border.AppendLine();
+            border.Append(new String(' ', 4));
+            for (int i = 0; i < BalloonsContainer.NumberOfColumns; i++)
+            {
+                if (i != BalloonsContainer.NumberOfColumns - 1)
+                {
+                    border.Append(i + " ");
+                }
+                else
+                {
+                    border.AppendLine(i.ToString());
+                }
+            }
+
+            border.Append(new String(' ', 4));
+            border.Append(new String('-', BalloonsContainer.NumberOfColumns * 2));
+            Console.WriteLine(border);
+        }
+
+        private void DrawBottomBorder()
+        {
+            StringBuilder border = new StringBuilder();
+            border.Append(new String(' ', 4));
+            border.AppendLine(new String('-', BalloonsContainer.NumberOfColumns * 2));
+            Console.WriteLine(border);
         }
 
         private char ConvertBalloonToChar(Balloon balloon)
@@ -79,7 +117,7 @@
                 case BalloonType.Yellow:
                     matchColor = ConsoleColor.Yellow;
                     break;
-                case BalloonType.Black:
+                case BalloonType.Popped:
                     matchColor = ConsoleColor.Black;
                     break;
                 default:

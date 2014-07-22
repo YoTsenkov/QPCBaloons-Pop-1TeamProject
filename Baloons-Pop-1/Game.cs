@@ -3,6 +3,8 @@
     using System;
     using System.Linq;
     using Balloons;
+    using UserInterface;
+    using Exceptions;
 
     class Game
     {
@@ -18,7 +20,6 @@
             this.Balloons = new BalloonsContainer(new BalloonFactory(), new StandardRandomNumberProvider());
             this.UIGenerator = new ConsoleUIGenerator(this.Balloons);
             this.Scoreboard = new ScoreBoard();
-            this.Balloons.Fill();
         }
 
         private BalloonsContainer Balloons
@@ -106,11 +107,21 @@
             }
         }
 
-        public void ExecuteCommand(string command)
+        public void Start()
+        {
+            this.Balloons.Fill();
+            this.UIGenerator.DisplayMessage(UIGenerator.EnterRowAndColumnMessage);
+            while (true)
+            {
+                this.ExecuteCommand(Console.ReadLine());
+            }
+        }
+
+        private void ExecuteCommand(string command)
         {
             if (command == "exit")
             {
-                Console.WriteLine("Thanks for playing!!");
+                this.UIGenerator.DisplayMessage(UIGenerator.GoodByeMessage);
                 Environment.Exit(0);
             }
             else if (command == "restart")
@@ -127,7 +138,7 @@
 
                 if (rowsAndCols.Length != 2)
                 {
-                    Console.WriteLine("Unknown Command");
+                    this.UIGenerator.DisplayMessage(UIGenerator.InvalidMoveMessage);
                 }
                 else
                 {
@@ -142,7 +153,7 @@
                     }
                     else
                     {
-                        Console.WriteLine("Unknown Command");
+                        this.UIGenerator.DisplayMessage(UIGenerator.InvalidMoveMessage);
                     }
                 }
             }
@@ -151,12 +162,25 @@
         private void PopBallons(int row, int column)
         {
             bool isGameOver = false;
-            this.balloons.PopBaloons(row + 1, column + 1);
-            isGameOver = this.balloons.IsContainerEmpty();
 
+            try
+            {
+                this.balloons.PopBaloons(row + 1, column + 1);
+                this.UIGenerator.DisplayMessage(UIGenerator.EnterRowAndColumnMessage);
+            }
+            catch (InvalidRowOrColumnException)
+            {
+                this.UIGenerator.DisplayMessage(UIGenerator.InvalidMoveMessage);
+            }
+            catch (MissingBalloonException)
+            {
+                this.UIGenerator.DisplayMessage(UIGenerator.MissingBalloonMessage);
+            }
+
+            isGameOver = this.balloons.IsContainerEmpty();
             if (isGameOver)
             {
-                Console.WriteLine("Congratulations!!You popped all the baloons in" + this.NumberOfTurn + "moves!");
+                this.UIGenerator.DisplayMessage(UIGenerator.PoppedAllBaloonsMessage, this.numberOfTurn);
                 this.Scoreboard.Update(this.NumberOfTurn);
                 this.Restart();
             }
@@ -164,9 +188,10 @@
 
         private void Restart()
         {
-            this.Balloons = new BalloonsContainer(new BalloonFactory(), new StandardRandomNumberProvider());
-            this.UIGenerator = new ConsoleUIGenerator(this.Balloons);
+            this.Balloons.Empty();
             this.Balloons.Fill();
+            this.NumberOfTurn = 0;
+            this.UIGenerator.DisplayMessage(UIGenerator.EnterRowAndColumnMessage);
         }
     }
 }

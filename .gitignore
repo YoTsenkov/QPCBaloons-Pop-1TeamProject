@@ -64,3 +64,5 @@ ClientBin/
 *.[Pp]ublish.xml
 *.pfx
 *.publishsettings
+.JustCode
+*.settings.xml

@@ -37,7 +37,7 @@
                     case BalloonType.Yellow:
                         balloon = yellowBalloonCreator.CreateBalloon();
                         break;
-                    case BalloonType.Black:
+                    case BalloonType.Popped:
                         balloon = poppedBallonCreator.CreateBalloon();
                         break;
                     default:
