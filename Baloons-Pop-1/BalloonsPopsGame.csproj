@@ -51,8 +51,10 @@
     <Compile Include="Balloons\Creator\BlueBalloonCreator.cs" />
     <Compile Include="Balloons\BalloonType.cs" />
     <Compile Include="Balloons\IBalloonsContainer.cs" />
-    <Compile Include="UserInterface\ConsoleColorFactory.cs" />
-    <Compile Include="UserInterface\ConsoleUIGenerator.cs" />
+    <Compile Include="UserInterface\Console\BalloonDrawingManagerFactory.cs" />
+    <Compile Include="UserInterface\Console\BlueBalloonDrawingManager.cs" />
+    <Compile Include="UserInterface\Console\ConsoleColorFactory.cs" />
+    <Compile Include="UserInterface\Console\ConsoleUIGenerator.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Balloons\GreenBalloon.cs" />
     <Compile Include="Balloons\Creator\GreenBalloonCreator.cs" />
@@ -69,6 +71,11 @@
     <Compile Include="Balloons\YellowBalloon.cs" />
     <Compile Include="Balloons\Creator\YellowBalloonCreator.cs" />
     <Compile Include="StandardRandomNumberProvider.cs" />
+    <Compile Include="UserInterface\Console\BalloonDrawingManager.cs" />
+    <Compile Include="UserInterface\Console\GreenBalloonDrawingManager.cs" />
+    <Compile Include="UserInterface\Console\PoppedBalloonDrawingManager.cs" />
+    <Compile Include="UserInterface\Console\RedBalloonDrawingManager.cs" />
+    <Compile Include="UserInterface\Console\YellowBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\UIGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

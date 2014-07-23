@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Balloons;
+    using UserInterface.Console;
     using UserInterface;
     using Exceptions;
 
@@ -119,6 +120,7 @@
 
         private void ExecuteCommand(string command)
         {
+            command = command.Trim();
             if (command == "exit")
             {
                 this.UIGenerator.DisplayMessage(UIGenerator.GoodByeMessage);

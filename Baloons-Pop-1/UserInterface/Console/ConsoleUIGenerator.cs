@@ -1,4 +1,4 @@
-﻿namespace BalloonsPopsGame.UserInterface
+﻿namespace BalloonsPopsGame.UserInterface.Console
 {
     using System;
     using Balloons;
@@ -32,9 +32,8 @@
                     Console.Write((counter / BalloonsContainer.NumberOfColumns).ToString() + " | ");
                 }
 
-                Console.ForegroundColor = ConsoleColorFactory.GetConsoleColor(balloon);
-                Console.Write(ConvertBalloonToChar(balloon) + " ");
-                Console.ForegroundColor = ConsoleColor.White;
+                var balloonDrawingManager = BalloonDrawingManagerFactory.GetBalloonDrawingManager(balloon);
+                balloonDrawingManager.Draw(balloon);
 
                 if (counter % BalloonsContainer.NumberOfColumns == BalloonsContainer.NumberOfColumns - 1)
                 {
@@ -80,23 +79,6 @@
             border.Append(new String(' ', 4));
             border.AppendLine(new String('-', BalloonsContainer.NumberOfColumns * 2));
             Console.WriteLine(border);
-        }
-
-        private char ConvertBalloonToChar(Balloon balloon)
-        {
-            switch (balloon.GetType().Name)
-            {
-                case "RedBalloon":
-                    return '1';
-                case "GreenBalloon":
-                    return '2';
-                case "BlueBalloon":
-                    return '3';
-                case "YellowBalloon":
-                    return '4';
-                default:
-                    return '-';
-            }
         }
     }
 }

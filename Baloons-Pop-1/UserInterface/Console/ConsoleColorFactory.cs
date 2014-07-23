@@ -1,30 +1,30 @@
-﻿namespace BalloonsPopsGame.UserInterface
+﻿namespace BalloonsPopsGame.UserInterface.Console
 {
     using System;
     using Balloons;
 
     public class ConsoleColorFactory
     {
-        public static ConsoleColor GetConsoleColor(Balloon ballon)
+        public static ConsoleColor GetConsoleColor(Balloon balloon)
         {
-            ConsoleColor result = ConsoleColor.White;
-            if (ballon is RedBalloon)
+            ConsoleColor result;
+            if (balloon is RedBalloon)
             {
                 result = ConsoleColor.Red;
             }
-            else if (ballon is BlueBalloon)
+            else if (balloon is BlueBalloon)
             {
                 result = ConsoleColor.Blue;
             }
-            else if (ballon is GreenBalloon)
+            else if (balloon is GreenBalloon)
             {
                 result = ConsoleColor.Green;
             }
-            else if (ballon is YellowBalloon)
+            else if (balloon is YellowBalloon)
             {
                 result = ConsoleColor.Yellow;
             }
-            else if (ballon is PoppedBalloon)
+            else
             {
                 result = ConsoleColor.White;
             }

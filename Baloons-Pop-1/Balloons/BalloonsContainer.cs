@@ -193,7 +193,13 @@
 
         public void Empty()
         {
-            throw new NotImplementedException();
+            for (int row = 0; row < NumberOfRows; row++)
+            {
+                for (int col = 0; col < NumberOfColumns; col++)
+                {
+                    this.Balloons[row, col] = this.Factory.GetBalloon(BalloonType.Popped);
+                }
+            }
         }
 
         public IEnumerator<Balloon> GetEnumerator()
