@@ -8,6 +8,10 @@
     {
         private IList<Tuple<string, int>> players;
 
+        public Scoreboard()
+            : this(new List<Tuple<string, int>>())
+        { }
+
         public Scoreboard(IList<Tuple<string, int>> players)
         {
             this.Players = players;

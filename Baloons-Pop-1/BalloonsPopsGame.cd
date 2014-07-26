@@ -7,16 +7,16 @@
       <FileName>BallonsPosGameMain.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BalloonsPopsGame.Game" Collapsed="true">
+  <Class Name="BalloonsPopsGame.Game" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EIAAAAAAACABAAAAAAAAAIEBAACAAQACCAAAAAiAAAA=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="BalloonsPopsGame.Balloons.Balloon" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.25" Y="4" Width="1.5" />
+    <Position X="14" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIgAAAAAAAAAAAAIAAAQAAAAAAAjA=</HashCode>
       <FileName>Balloons\Balloon.cs</FileName>
@@ -32,7 +32,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="BalloonsPopsGame.Balloons.BalloonsContainer" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.75" Y="4" Width="1.5" />
+    <Position X="12.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BABAAAAAAAAgABAgKAIAQIAAAAACCAAFCABAAAgAQQQ=</HashCode>
       <FileName>Balloons\BalloonsContainer.cs</FileName>
@@ -62,7 +62,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="BalloonsPopsGame.Score.Scoreboard" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8" Y="4" Width="1.5" />
+    <Position X="12.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAgAAAAAAAA=</HashCode>
       <FileName>Score\Scoreboard.cs</FileName>
@@ -84,7 +84,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BalloonsPopsGame.UserInterface.Console.BlueBalloonDrawingManager" Collapsed="true">
-    <Position X="3" Y="1.75" Width="1.5" />
+    <Position X="5.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserInterface\Console\BlueBalloonDrawingManager.cs</FileName>
@@ -98,28 +98,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BalloonsPopsGame.UserInterface.Console.GreenBalloonDrawingManager" Collapsed="true">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+    <Position X="9.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserInterface\Console\GreenBalloonDrawingManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BalloonsPopsGame.UserInterface.Console.PoppedBalloonDrawingManager" Collapsed="true">
-    <Position X="9.75" Y="1.75" Width="1.5" />
+    <Position X="0.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserInterface\Console\PoppedBalloonDrawingManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BalloonsPopsGame.UserInterface.Console.RedBalloonDrawingManager" Collapsed="true">
-    <Position X="0.75" Y="1.75" Width="1.5" />
+    <Position X="3" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserInterface\Console\RedBalloonDrawingManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BalloonsPopsGame.UserInterface.Console.YellowBalloonDrawingManager" Collapsed="true">
-    <Position X="5.25" Y="1.75" Width="1.5" />
+    <Position X="7.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UserInterface\Console\YellowBalloonDrawingManager.cs</FileName>
@@ -139,6 +139,13 @@
       <FileName>UserInterface\UIMessages.cs</FileName>
     </TypeIdentifier>
   </Struct>
+  <Interface Name="BalloonsPopsGame.IGame" Collapsed="true">
+    <Position X="15.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAACAAAAAAAAAAAAABAAAAAAACAAAAAACAAAA=</HashCode>
+      <FileName>IGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Interface Name="BalloonsPopsGame.Balloons.IBalloonFactory" Collapsed="true">
     <Position X="12.25" Y="5" Width="1.5" />
     <TypeIdentifier>
@@ -154,21 +161,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="BalloonsPopsGame.RandomProvider.IRandomNumbersProvider" Collapsed="true">
-    <Position X="15.75" Y="5" Width="1.5" />
+    <Position X="17.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RandomProvider\IRandomNumbersProvider.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="BalloonsPopsGame.Score.IScoreboard" Collapsed="true">
-    <Position X="17.5" Y="5" Width="1.5" />
+    <Position X="12.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Score\IScoreboard.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="BalloonsPopsGame.Balloons.BalloonType" Collapsed="true">
-    <Position X="12.25" Y="6" Width="1.5" />
+    <Position X="12.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAgAAAAAAAAAAAAAAAAEAAAAAADAAAAA=</HashCode>
       <FileName>Balloons\BalloonType.cs</FileName>

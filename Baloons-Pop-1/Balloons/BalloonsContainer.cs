@@ -16,6 +16,10 @@
         private IBalloonFactory factory;
         private IRandomNumbersProvider randomNumberProvider;
 
+        public BalloonsContainer()
+            : this(new BalloonFactory(), StandardRandomNumbersProvider.Instance)
+        { }
+
         public BalloonsContainer(IBalloonFactory factory, IRandomNumbersProvider randomNumberProvider)
         {
             this.Balloons = new Balloon[NumberOfRows, NumberOfColumns];

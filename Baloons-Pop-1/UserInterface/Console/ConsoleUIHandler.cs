@@ -1,9 +1,9 @@
 ﻿namespace BalloonsPopsGame.UserInterface.Console
 {
-    using System;
     using Balloons;
-    using System.Text;
     using Score;
+    using System;
+    using System.Text;
 
     public class ConsoleUIHandler : UIHandler
     {
