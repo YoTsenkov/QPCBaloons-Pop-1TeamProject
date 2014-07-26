@@ -1,6 +1,6 @@
 ﻿namespace BalloonsPopsGame
 {
-    public interface IRandomNumberProvider
+    public interface IRandomNumbersProvider
     {
         int GetRandomNumber(int minValue, int maxValue);
     }

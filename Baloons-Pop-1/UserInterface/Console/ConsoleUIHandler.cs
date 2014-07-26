@@ -11,10 +11,10 @@
         {
         }
 
-        public override string ReadCommand()
+        public override string ReadInput()
         {
-            var command = Console.ReadLine();
-            return command;
+            var input = Console.ReadLine();
+            return input;
         }
 
         public override void DisplayMessage(string message)
@@ -22,9 +22,31 @@
             Console.WriteLine(message);
         }
 
-        public override void DisplayMessage(string message, int moves)
+        public override void DisplayMessage(string message, object placeholder)
         {
-            Console.WriteLine(message, moves);
+            Console.WriteLine(message, placeholder);
+        }
+
+        public override void DisplayMessage(string message, object firstPlaceholder, object secondPlaceholder)
+        {
+            Console.WriteLine(message, firstPlaceholder, secondPlaceholder);
+        }
+
+        public override void DisplayScoreboard(IScoreBoard scoreboard)
+        {
+            if (scoreboard.Players.Count == 0)
+            {
+                this.DisplayMessage(UIMessages.EmptyScoreBoardMessage);
+            }
+            else
+            {
+                this.DisplayMessage(UIMessages.ScoreboardMessage);
+
+                foreach (var player in scoreboard.Players)
+                {
+                    this.DisplayMessage(UIMessages.PlayerMovesMessage, player.Item1, player.Item2);
+                }
+            }
         }
 
         protected override void DisplayBalloons()

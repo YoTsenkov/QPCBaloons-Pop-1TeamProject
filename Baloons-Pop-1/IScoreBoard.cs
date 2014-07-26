@@ -6,8 +6,8 @@ namespace BalloonsPopsGame
 
     public interface IScoreBoard
     {
-        void Display();
+        IList<Tuple<string, int>> Players { get; }
 
-        void Update(int moves);
+        void Update(string playerName, int numberOfTurns);
     }
 }

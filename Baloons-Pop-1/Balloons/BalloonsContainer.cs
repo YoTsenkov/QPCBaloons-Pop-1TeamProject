@@ -13,9 +13,9 @@
 
         private Balloon[,] balloons;
         private IBalloonFactory factory;
-        private IRandomNumberProvider randomNumberProvider;
+        private IRandomNumbersProvider randomNumberProvider;
 
-        public BalloonsContainer(IBalloonFactory factory, IRandomNumberProvider randomNumberProvider)
+        public BalloonsContainer(IBalloonFactory factory, IRandomNumbersProvider randomNumberProvider)
         {
             this.Balloons = new Balloon[NumberOfRows, NumberOfColumns];
             this.Factory = factory;
@@ -24,7 +24,7 @@
 
         public event EventHandler ContainerChanged;
 
-        private IRandomNumberProvider RandomNumberProvider
+        private IRandomNumbersProvider RandomNumberProvider
         {
             get
             {

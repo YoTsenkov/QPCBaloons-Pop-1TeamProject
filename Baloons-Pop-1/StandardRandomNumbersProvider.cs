@@ -1,17 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BalloonsPopsGame
+﻿namespace BalloonsPopsGame
 {
-    class StandardRandomNumberProvider : IRandomNumberProvider
+    using System;
+
+    class StandardRandomNumbersProvider : IRandomNumbersProvider
     {
+        private static StandardRandomNumbersProvider instance;
         private Random randomGenerator;
 
-        public StandardRandomNumberProvider()
+        private StandardRandomNumbersProvider()
         {
             this.RandomGenerator = new Random();
+        }
+
+        public static StandardRandomNumbersProvider Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new StandardRandomNumbersProvider();
+                }
+
+                return instance;
+            }
         }
 
         private Random RandomGenerator

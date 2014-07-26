@@ -64,7 +64,7 @@
     <Compile Include="Balloons\PoppedBalloon.cs" />
     <Compile Include="Balloons\Creator\PoppedBalloonCreator.cs" />
     <Compile Include="Exceptions\InvalidRowOrColumnException.cs" />
-    <Compile Include="IRandomNumberProvider.cs" />
+    <Compile Include="IRandomNumbersProvider.cs" />
     <Compile Include="Exceptions\MissingBalloonException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Balloons\RedBalloon.cs" />
@@ -72,13 +72,14 @@
     <Compile Include="ScoreBoard.cs" />
     <Compile Include="Balloons\YellowBalloon.cs" />
     <Compile Include="Balloons\Creator\YellowBalloonCreator.cs" />
-    <Compile Include="StandardRandomNumberProvider.cs" />
+    <Compile Include="StandardRandomNumbersProvider.cs" />
     <Compile Include="UserInterface\Console\BalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\GreenBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\PoppedBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\RedBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\YellowBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\UIHandler.cs" />
+    <Compile Include="UserInterface\UIMessages.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

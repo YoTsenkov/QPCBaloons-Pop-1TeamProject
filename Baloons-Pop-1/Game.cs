@@ -1,10 +1,9 @@
 ﻿namespace BalloonsPopsGame
 {
-    using System;
-    using System.Linq;
     using Balloons;
-    using UserInterface;
     using Exceptions;
+    using System;
+    using UserInterface;
 
     class Game
     {
@@ -98,14 +97,14 @@
 
         public void Start()
         {
-            this.UIHandler.DisplayMessage(UIHandler.WelcomeMessage);
-            this.UIHandler.DisplayMessage(UIHandler.InstructionsMessage);
+            this.UIHandler.DisplayMessage(UIMessages.WelcomeMessage);
+            this.UIHandler.DisplayMessage(UIMessages.InstructionsMessage);
             this.Balloons.Fill();
-            this.UIHandler.DisplayMessage(UIHandler.EnterRowAndColumnMessage);
+            this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
 
             while (!this.IsGameOver)
             {
-                this.ExecuteCommand(this.UIHandler.ReadCommand());
+                this.ExecuteCommand(this.UIHandler.ReadInput());
             }
         }
 
@@ -116,7 +115,7 @@
             if (command == "exit")
             {
                 this.IsGameOver = true;
-                this.UIHandler.DisplayMessage(UIHandler.GoodByeMessage);
+                this.UIHandler.DisplayMessage(UIMessages.GoodByeMessage);
             }
             else if (command == "restart")
             {
@@ -124,7 +123,7 @@
             }
             else if (command == "top")
             {
-                this.Scoreboard.Display();
+                this.UIHandler.DisplayScoreboard(this.Scoreboard);                
             }
             else
             {
@@ -137,7 +136,7 @@
             string[] rowsAndCols = command.Split();
             if (rowsAndCols.Length != 2)
             {
-                this.UIHandler.DisplayMessage(UIHandler.InvalidMoveMessage);
+                this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
             }
 
             int row, column;
@@ -152,27 +151,28 @@
                     this.balloons.PopBaloons(row, column);
                     this.NumberOfTurn++;
                     shouldRestart = this.balloons.IsEmpty();
-                    this.UIHandler.DisplayMessage(UIHandler.EnterRowAndColumnMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
                 }
                 catch (InvalidRowOrColumnException)
                 {
-                    this.UIHandler.DisplayMessage(UIHandler.InvalidMoveMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
                 }
                 catch (MissingBalloonException)
                 {
-                    this.UIHandler.DisplayMessage(UIHandler.MissingBalloonMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.MissingBalloonMessage);
                 }
 
                 if (shouldRestart)
                 {
-                    this.UIHandler.DisplayMessage(UIHandler.PoppedAllBaloonsMessage, this.numberOfTurn);
-                    this.Scoreboard.Update(this.NumberOfTurn);
+                    this.UIHandler.DisplayMessage(UIMessages.PoppedAllBaloonsMessage, this.numberOfTurn);
+                    this.UIHandler.DisplayMessage(UIMessages.AskForNameMessage);
+                    this.Scoreboard.Update(this.UIHandler.ReadInput(), this.NumberOfTurn);
                     this.Restart();
                 }
             }
             else
             {
-                this.UIHandler.DisplayMessage(UIHandler.InvalidMoveMessage);
+                this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
             }
         }
 
@@ -181,7 +181,7 @@
             this.Balloons.Empty();
             this.Balloons.Fill();
             this.NumberOfTurn = 0;
-            this.UIHandler.DisplayMessage(UIHandler.EnterRowAndColumnMessage);
+            this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
         }
     }
 }
