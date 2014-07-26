@@ -4,11 +4,17 @@
     using Balloons;
     using System.Text;
 
-    public class ConsoleUIGenerator : UIGenerator
+    public class ConsoleUIHandler : UIHandler
     {
-        public ConsoleUIGenerator(BalloonsContainer container)
+        public ConsoleUIHandler(IBalloonsContainer container)
             : base(container)
         {
+        }
+
+        public override string ReadCommand()
+        {
+            var command = Console.ReadLine();
+            return command;
         }
 
         public override void DisplayMessage(string message)

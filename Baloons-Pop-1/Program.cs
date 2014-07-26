@@ -2,15 +2,17 @@
 {
     using System;
     using Balloons;
+    using BalloonsPopsGame.UserInterface.Console;
 
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to “Balloons Pops” game. Please try to pop the balloons.");
-            Console.WriteLine(" Use 'top' to view the top scoreboard, 'restart' to start a new game and 'exit' to quit the game.");
-            Game game = Game.Instance;
-            game.Start();            
+            var balloonsContainer = new BalloonsContainer(new BalloonFactory(), new StandardRandomNumberProvider());
+            var scoreBoard = new ScoreBoard();
+            var consoleUIHandler = new ConsoleUIHandler(balloonsContainer);
+            Game game = new Game(balloonsContainer, scoreBoard, consoleUIHandler);
+            game.Start();
         }
     }
 }

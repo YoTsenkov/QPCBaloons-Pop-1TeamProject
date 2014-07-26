@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Collections.Generic;
 
-    class ScoreBoard
+    public class ScoreBoard : IScoreBoard
     {
         private List<Tuple<string, int>> players;
 

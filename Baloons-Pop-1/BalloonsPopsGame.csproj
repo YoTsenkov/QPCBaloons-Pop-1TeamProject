@@ -48,13 +48,15 @@
     <Compile Include="Balloons\BalloonFactory.cs" />
     <Compile Include="Balloons\BalloonsContainer.cs" />
     <Compile Include="Balloons\BlueBalloon.cs" />
+    <Compile Include="Balloons\Creator\BalloonCreatorFactory.cs" />
     <Compile Include="Balloons\Creator\BlueBalloonCreator.cs" />
     <Compile Include="Balloons\BalloonType.cs" />
     <Compile Include="Balloons\IBalloonsContainer.cs" />
+    <Compile Include="IScoreBoard.cs" />
     <Compile Include="UserInterface\Console\BalloonDrawingManagerFactory.cs" />
     <Compile Include="UserInterface\Console\BlueBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\ConsoleColorFactory.cs" />
-    <Compile Include="UserInterface\Console\ConsoleUIGenerator.cs" />
+    <Compile Include="UserInterface\Console\ConsoleUIHandler.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Balloons\GreenBalloon.cs" />
     <Compile Include="Balloons\Creator\GreenBalloonCreator.cs" />
@@ -76,7 +78,7 @@
     <Compile Include="UserInterface\Console\PoppedBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\RedBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\YellowBalloonDrawingManager.cs" />
-    <Compile Include="UserInterface\UIGenerator.cs" />
+    <Compile Include="UserInterface\UIHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

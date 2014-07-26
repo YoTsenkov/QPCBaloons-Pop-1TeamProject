@@ -3,27 +3,26 @@
     using System;
     using System.Linq;
     using Balloons;
-    using UserInterface.Console;
     using UserInterface;
     using Exceptions;
 
     class Game
     {
-        private static Game instance;
-        private BalloonsContainer balloons;
+        private IBalloonsContainer balloons;
         private int numberOfTurn;
-        private UIGenerator uiGenerator;
-        private ScoreBoard scoreBoard;
+        private UIHandler uiHandler;
+        private IScoreBoard scoreboard;
 
-        private Game()
+        public Game(IBalloonsContainer balloons, IScoreBoard scoreboard, UIHandler uiHandler)
         {
             this.NumberOfTurn = 0;
-            this.Balloons = new BalloonsContainer(new BalloonFactory(), new StandardRandomNumberProvider());
-            this.UIGenerator = new ConsoleUIGenerator(this.Balloons);
-            this.Scoreboard = new ScoreBoard();
+            this.IsGameOver = false;
+            this.Balloons = balloons;
+            this.Scoreboard = scoreboard;
+            this.UIHandler = uiHandler;
         }
 
-        private BalloonsContainer Balloons
+        private IBalloonsContainer Balloons
         {
             get
             {
@@ -41,11 +40,11 @@
             }
         }
 
-        private UIGenerator UIGenerator
+        private UIHandler UIHandler
         {
             get
             {
-                return this.uiGenerator;
+                return this.uiHandler;
             }
 
             set
@@ -55,28 +54,15 @@
                     throw new ArgumentNullException("UIGenerator", "UIGenerator cannot be null!");
                 }
 
-                this.uiGenerator = value;
+                this.uiHandler = value;
             }
         }
 
-        public static Game Instance
+        private IScoreBoard Scoreboard
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new Game();
-                }
-
-                return instance;
-            }
-        }
-
-        private ScoreBoard Scoreboard
-        {
-            get
-            {
-                return this.scoreBoard;
+                return this.scoreboard;
             }
 
             set
@@ -86,7 +72,7 @@
                     throw new ArgumentNullException("ScoreBoard", "ScoreBoard cannot be null!");
                 }
 
-                this.scoreBoard = value;
+                this.scoreboard = value;
             }
         }
 
@@ -108,23 +94,29 @@
             }
         }
 
+        private bool IsGameOver { get; set; }
+
         public void Start()
         {
+            this.UIHandler.DisplayMessage(UIHandler.WelcomeMessage);
+            this.UIHandler.DisplayMessage(UIHandler.InstructionsMessage);
             this.Balloons.Fill();
-            this.UIGenerator.DisplayMessage(UIGenerator.EnterRowAndColumnMessage);
-            while (true)
+            this.UIHandler.DisplayMessage(UIHandler.EnterRowAndColumnMessage);
+
+            while (!this.IsGameOver)
             {
-                this.ExecuteCommand(Console.ReadLine());
+                this.ExecuteCommand(this.UIHandler.ReadCommand());
             }
         }
 
         private void ExecuteCommand(string command)
         {
-            command = command.Trim();
+            command = command.Trim().ToLower();
+
             if (command == "exit")
             {
-                this.UIGenerator.DisplayMessage(UIGenerator.GoodByeMessage);
-                Environment.Exit(0);
+                this.IsGameOver = true;
+                this.UIHandler.DisplayMessage(UIHandler.GoodByeMessage);
             }
             else if (command == "restart")
             {
@@ -136,55 +128,51 @@
             }
             else
             {
-                var rowsAndCols = command.Split();
-
-                if (rowsAndCols.Length != 2)
-                {
-                    this.UIGenerator.DisplayMessage(UIGenerator.InvalidMoveMessage);
-                }
-                else
-                {
-                    int row, column;
-                    bool validRow = int.TryParse(rowsAndCols[0], out row);
-                    bool validColumn = int.TryParse(rowsAndCols[1], out column);
-
-                    if (validRow && validColumn)
-                    {
-                        this.PopBallons(row, column);
-                        this.NumberOfTurn++;
-                    }
-                    else
-                    {
-                        this.UIGenerator.DisplayMessage(UIGenerator.InvalidMoveMessage);
-                    }
-                }
+                this.PerformBallonsPopping(command);
             }
         }
 
-        private void PopBallons(int row, int column)
+        private void PerformBallonsPopping(string command)
         {
-            bool isGameOver = false;
-
-            try
+            string[] rowsAndCols = command.Split();
+            if (rowsAndCols.Length != 2)
             {
-                this.balloons.PopBaloons(row + 1, column + 1);
-                this.UIGenerator.DisplayMessage(UIGenerator.EnterRowAndColumnMessage);
-            }
-            catch (InvalidRowOrColumnException)
-            {
-                this.UIGenerator.DisplayMessage(UIGenerator.InvalidMoveMessage);
-            }
-            catch (MissingBalloonException)
-            {
-                this.UIGenerator.DisplayMessage(UIGenerator.MissingBalloonMessage);
+                this.UIHandler.DisplayMessage(UIHandler.InvalidMoveMessage);
             }
 
-            isGameOver = this.balloons.IsContainerEmpty();
-            if (isGameOver)
+            int row, column;
+            bool isValidRow = int.TryParse(rowsAndCols[0], out row);
+            bool isValidColumn = int.TryParse(rowsAndCols[1], out column);
+            bool shouldRestart = false;
+
+            if (isValidRow && isValidColumn)
             {
-                this.UIGenerator.DisplayMessage(UIGenerator.PoppedAllBaloonsMessage, this.numberOfTurn);
-                this.Scoreboard.Update(this.NumberOfTurn);
-                this.Restart();
+                try
+                {
+                    this.balloons.PopBaloons(row, column);
+                    this.NumberOfTurn++;
+                    shouldRestart = this.balloons.IsEmpty();
+                    this.UIHandler.DisplayMessage(UIHandler.EnterRowAndColumnMessage);
+                }
+                catch (InvalidRowOrColumnException)
+                {
+                    this.UIHandler.DisplayMessage(UIHandler.InvalidMoveMessage);
+                }
+                catch (MissingBalloonException)
+                {
+                    this.UIHandler.DisplayMessage(UIHandler.MissingBalloonMessage);
+                }
+
+                if (shouldRestart)
+                {
+                    this.UIHandler.DisplayMessage(UIHandler.PoppedAllBaloonsMessage, this.numberOfTurn);
+                    this.Scoreboard.Update(this.NumberOfTurn);
+                    this.Restart();
+                }
+            }
+            else
+            {
+                this.UIHandler.DisplayMessage(UIHandler.InvalidMoveMessage);
             }
         }
 
@@ -193,7 +181,7 @@
             this.Balloons.Empty();
             this.Balloons.Fill();
             this.NumberOfTurn = 0;
-            this.UIGenerator.DisplayMessage(UIGenerator.EnterRowAndColumnMessage);
+            this.UIHandler.DisplayMessage(UIHandler.EnterRowAndColumnMessage);
         }
     }
 }
