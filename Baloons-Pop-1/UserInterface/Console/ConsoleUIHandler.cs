@@ -60,7 +60,7 @@
                     Console.Write((counter / BalloonsContainer.NumberOfColumns).ToString() + " | ");
                 }
 
-                var balloonDrawingManager = BalloonDrawingManagerFactory.GetBalloonDrawingManager(balloon);
+                var balloonDrawingManager = BalloonDrawingManagerFactory.GetBalloonDrawingManager(balloon.Type);
                 balloonDrawingManager.Draw(balloon);
 
                 if (counter % BalloonsContainer.NumberOfColumns == BalloonsContainer.NumberOfColumns - 1)

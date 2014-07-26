@@ -1,18 +1,12 @@
 ﻿namespace BalloonsPopsGame.Balloons
-{    
+{
     using System;
-    using Creator;
     using System.Collections.Generic;
 
     public class BalloonFactory : IBalloonFactory
     {
-        private static readonly RedBalloonCreator redBalloonCreator = new RedBalloonCreator();
-        private static readonly BlueBalloonCreator blueBalloonCreator = new BlueBalloonCreator();
-        private static readonly GreenBalloonCreator greenBalloonCreator = new GreenBalloonCreator();
-        private static readonly YellowBalloonCreator yellowBalloonCreator = new YellowBalloonCreator();
-        private static readonly PoppedBalloonCreator poppedBallonCreator = new PoppedBalloonCreator();
-
-        private readonly Dictionary<BalloonType, Balloon> balloons = new Dictionary<BalloonType, Balloon>();
+        private static readonly Balloon BalloonInstance = new Balloon();
+        private readonly IDictionary<BalloonType, Balloon> balloons = new Dictionary<BalloonType, Balloon>();
 
         public Balloon GetBalloon(BalloonType key)
         {
@@ -23,22 +17,23 @@
             }
             else
             {
+                balloon = BalloonInstance.Clone();
                 switch (key)
                 {
                     case BalloonType.Red:
-                        balloon = redBalloonCreator.CreateBalloon();
+                        balloon.Type = BalloonType.Red;
                         break;
                     case BalloonType.Green:
-                        balloon = greenBalloonCreator.CreateBalloon();
+                        balloon.Type = BalloonType.Green;
                         break;
                     case BalloonType.Blue:
-                        balloon = blueBalloonCreator.CreateBalloon();
+                        balloon.Type = BalloonType.Blue;
                         break;
                     case BalloonType.Yellow:
-                        balloon = yellowBalloonCreator.CreateBalloon();
+                        balloon.Type = BalloonType.Yellow;
                         break;
                     case BalloonType.Popped:
-                        balloon = poppedBallonCreator.CreateBalloon();
+                        balloon.Type = BalloonType.Popped;
                         break;
                     default:
                         throw new ArgumentException("No such balloon color!");

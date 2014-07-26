@@ -7,7 +7,7 @@
     {
         public override void Draw(Balloon balloon)
         {
-            Console.ForegroundColor = ConsoleColorFactory.GetConsoleColor(balloon);
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(4 + " ");
             Console.ForegroundColor = ConsoleColor.White;
         }

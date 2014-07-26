@@ -44,34 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Balloons\Balloon.cs" />
-    <Compile Include="Balloons\Creator\BalloonCreator.cs" />
     <Compile Include="Balloons\BalloonFactory.cs" />
     <Compile Include="Balloons\BalloonsContainer.cs" />
-    <Compile Include="Balloons\BlueBalloon.cs" />
-    <Compile Include="Balloons\Creator\BalloonCreatorFactory.cs" />
-    <Compile Include="Balloons\Creator\BlueBalloonCreator.cs" />
     <Compile Include="Balloons\BalloonType.cs" />
     <Compile Include="Balloons\IBalloonsContainer.cs" />
     <Compile Include="IScoreBoard.cs" />
     <Compile Include="UserInterface\Console\BalloonDrawingManagerFactory.cs" />
     <Compile Include="UserInterface\Console\BlueBalloonDrawingManager.cs" />
-    <Compile Include="UserInterface\Console\ConsoleColorFactory.cs" />
     <Compile Include="UserInterface\Console\ConsoleUIHandler.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Balloons\GreenBalloon.cs" />
-    <Compile Include="Balloons\Creator\GreenBalloonCreator.cs" />
     <Compile Include="Balloons\IBalloonFactory.cs" />
-    <Compile Include="Balloons\PoppedBalloon.cs" />
-    <Compile Include="Balloons\Creator\PoppedBalloonCreator.cs" />
     <Compile Include="Exceptions\InvalidRowOrColumnException.cs" />
     <Compile Include="IRandomNumbersProvider.cs" />
     <Compile Include="Exceptions\MissingBalloonException.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Balloons\RedBalloon.cs" />
-    <Compile Include="Balloons\Creator\RedBalloonCreator.cs" />
     <Compile Include="ScoreBoard.cs" />
-    <Compile Include="Balloons\YellowBalloon.cs" />
-    <Compile Include="Balloons\Creator\YellowBalloonCreator.cs" />
     <Compile Include="StandardRandomNumbersProvider.cs" />
     <Compile Include="UserInterface\Console\BalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\GreenBalloonDrawingManager.cs" />

@@ -1,31 +1,33 @@
 ﻿namespace BalloonsPopsGame.UserInterface.Console
 {
+    using System;
     using Balloons;
 
     public class BalloonDrawingManagerFactory
     {
-        public static BalloonDrawingManager GetBalloonDrawingManager(Balloon balloon)
+        public static BalloonDrawingManager GetBalloonDrawingManager(BalloonType balloonType)
         {
             BalloonDrawingManager result;
-            if (balloon is RedBalloon)
+
+            switch (balloonType)
             {
-                result = new RedBalloonDrawingManager();
-            }
-            else if (balloon is BlueBalloon)
-            {
-                result = new BlueBalloonDrawingManager();
-            }
-            else if (balloon is GreenBalloon)
-            {
-                result = new GreenBalloonDrawingManager();
-            }
-            else if (balloon is YellowBalloon)
-            {
-                result = new YellowBalloonDrawingManager();
-            }
-            else
-            {
-                result = new PoppedBalloonDrawingManager();
+                case BalloonType.Red:
+                    result = new RedBalloonDrawingManager();
+                    break;
+                case BalloonType.Green:
+                    result = new GreenBalloonDrawingManager();
+                    break;
+                case BalloonType.Blue:
+                    result = new BlueBalloonDrawingManager();
+                    break;
+                case BalloonType.Yellow:
+                    result = new YellowBalloonDrawingManager();
+                    break;
+                case BalloonType.Popped:
+                    result = new PoppedBalloonDrawingManager();
+                    break;
+                default:
+                    throw new ArgumentException("No such BalloonDrawingManager");
             }
 
             return result;

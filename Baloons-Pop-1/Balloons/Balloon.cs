@@ -2,11 +2,13 @@
 {
     using System;
 
-    public abstract class Balloon : ICloneable
+    public class Balloon : ICloneable
     {
         public Balloon()
         {
         }
+
+        public BalloonType Type { get; set; }
 
         public static bool operator ==(Balloon firstBalloon, Balloon secondBalloon)
         {
@@ -20,14 +22,19 @@
 
         public override bool Equals(object obj)
         {
-            if (this.GetType().Name == obj.GetType().Name)
-            {
-                return true;
-            }
-            else
+            Balloon balloon = obj as Balloon;
+
+            if (balloon == null)
             {
                 return false;
             }
+
+            if (this.Type != balloon.Type)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public Balloon Clone()
@@ -37,10 +44,7 @@
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return 17;
-            }
+            return 17 ^ this.Type.GetHashCode();
         }
 
         object ICloneable.Clone()

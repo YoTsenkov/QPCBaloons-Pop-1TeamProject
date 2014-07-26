@@ -11,6 +11,8 @@ namespace BalloonsPopsGame.Balloons
 
         void PopBaloons(int row, int column);
 
+        void PopBaloons(Balloon[,] balloons, int row, int column);
+
         void Fill();
 
         void Empty();
