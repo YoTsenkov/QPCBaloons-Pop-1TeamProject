@@ -14,5 +14,8 @@
         public const string AskForNameMessage = "Please enter your name for the top scoreboard";
         public const string ScoreboardMessage = "Scoreboard:";
         public const string PlayerMovesMessage = "{0} --> {1} moves";
+        public const string ExitMessage = "exit";
+        public const string RestartMessage = "restart";
+        public const string TopMessage = "top";
     }
 }

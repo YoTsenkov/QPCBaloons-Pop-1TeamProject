@@ -4,15 +4,16 @@
     using Exceptions;
     using System;
     using UserInterface;
+    using Score;
 
-    class Game
+    class Game : IGame
     {
         private IBalloonsContainer balloons;
         private int numberOfTurn;
         private UIHandler uiHandler;
-        private IScoreBoard scoreboard;
+        private IScoreboard scoreboard;
 
-        public Game(IBalloonsContainer balloons, IScoreBoard scoreboard, UIHandler uiHandler)
+        public Game(IBalloonsContainer balloons, IScoreboard scoreboard, UIHandler uiHandler)
         {
             this.NumberOfTurn = 0;
             this.IsGameOver = false;
@@ -57,7 +58,7 @@
             }
         }
 
-        private IScoreBoard Scoreboard
+        private IScoreboard Scoreboard
         {
             get
             {
@@ -75,7 +76,7 @@
             }
         }
 
-        private int NumberOfTurn
+        public int NumberOfTurn
         {
             get
             {
@@ -93,7 +94,7 @@
             }
         }
 
-        private bool IsGameOver { get; set; }
+        public bool IsGameOver { get; set; }
 
         public void Start()
         {
@@ -108,30 +109,30 @@
             }
         }
 
-        private void ExecuteCommand(string command)
+        public void ExecuteCommand(string command)
         {
             command = command.Trim().ToLower();
 
-            if (command == "exit")
+            if (command == UIMessages.ExitMessage)
             {
                 this.IsGameOver = true;
                 this.UIHandler.DisplayMessage(UIMessages.GoodByeMessage);
             }
-            else if (command == "restart")
+            else if (command == UIMessages.RestartMessage)
             {
                 this.Restart();
             }
-            else if (command == "top")
+            else if (command == UIMessages.TopMessage)
             {
-                this.UIHandler.DisplayScoreboard(this.Scoreboard);                
+                this.UIHandler.DisplayScoreboard(this.Scoreboard);
             }
             else
             {
-                this.PerformBallonsPopping(command);
+                this.PerformBalloonsPopping(command);
             }
         }
 
-        private void PerformBallonsPopping(string command)
+        public void PerformBalloonsPopping(string command)
         {
             string[] rowsAndCols = command.Split();
             if (rowsAndCols.Length != 2)
@@ -176,7 +177,7 @@
             }
         }
 
-        private void Restart()
+        public void Restart()
         {
             this.Balloons.Empty();
             this.Balloons.Fill();

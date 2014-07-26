@@ -2,9 +2,10 @@
 {
     using System;
     using Balloons;
+    using Score;
 
     public abstract class UIHandler
-    {      
+    {
         private IBalloonsContainer container;
 
         public UIHandler(IBalloonsContainer container)
@@ -21,7 +22,7 @@
 
         public abstract string ReadInput();
 
-        public abstract void DisplayScoreboard(IScoreBoard scoreboard);
+        public abstract void DisplayScoreboard(IScoreboard scoreboard);
 
         protected abstract void ContainerChanged(object sender, EventArgs e);
 

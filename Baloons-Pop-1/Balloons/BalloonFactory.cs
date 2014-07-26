@@ -5,7 +5,6 @@
 
     public class BalloonFactory : IBalloonFactory
     {
-        private static readonly Balloon BalloonInstance = new Balloon();
         private readonly IDictionary<BalloonType, Balloon> balloons = new Dictionary<BalloonType, Balloon>();
 
         public Balloon GetBalloon(BalloonType key)
@@ -17,23 +16,23 @@
             }
             else
             {
-                balloon = BalloonInstance.Clone();
+                balloon = null;
                 switch (key)
                 {
                     case BalloonType.Red:
-                        balloon.Type = BalloonType.Red;
+                        balloon = new Balloon(BalloonType.Red);
                         break;
                     case BalloonType.Green:
-                        balloon.Type = BalloonType.Green;
+                        balloon = new Balloon(BalloonType.Green);
                         break;
                     case BalloonType.Blue:
-                        balloon.Type = BalloonType.Blue;
+                        balloon = new Balloon(BalloonType.Blue);
                         break;
                     case BalloonType.Yellow:
-                        balloon.Type = BalloonType.Yellow;
+                        balloon = new Balloon(BalloonType.Yellow);
                         break;
                     case BalloonType.Popped:
-                        balloon.Type = BalloonType.Popped;
+                        balloon = new Balloon(BalloonType.Popped);
                         break;
                     default:
                         throw new ArgumentException("No such balloon color!");

@@ -4,11 +4,12 @@
 
     public class Balloon : ICloneable
     {
-        public Balloon()
+        public Balloon(BalloonType type)
         {
+            this.Type = type;
         }
 
-        public BalloonType Type { get; set; }
+        public BalloonType Type { get; private set; }
 
         public static bool operator ==(Balloon firstBalloon, Balloon secondBalloon)
         {

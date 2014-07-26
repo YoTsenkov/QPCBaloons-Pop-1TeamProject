@@ -48,18 +48,19 @@
     <Compile Include="Balloons\BalloonsContainer.cs" />
     <Compile Include="Balloons\BalloonType.cs" />
     <Compile Include="Balloons\IBalloonsContainer.cs" />
-    <Compile Include="IScoreBoard.cs" />
+    <Compile Include="IGame.cs" />
+    <Compile Include="Score\IScoreboard.cs" />
     <Compile Include="UserInterface\Console\BalloonDrawingManagerFactory.cs" />
     <Compile Include="UserInterface\Console\BlueBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\ConsoleUIHandler.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Balloons\IBalloonFactory.cs" />
     <Compile Include="Exceptions\InvalidRowOrColumnException.cs" />
-    <Compile Include="IRandomNumbersProvider.cs" />
+    <Compile Include="RandomProvider\IRandomNumbersProvider.cs" />
     <Compile Include="Exceptions\MissingBalloonException.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ScoreBoard.cs" />
-    <Compile Include="StandardRandomNumbersProvider.cs" />
+    <Compile Include="BallonsPosGameMain.cs" />
+    <Compile Include="Score\Scoreboard.cs" />
+    <Compile Include="RandomProvider\StandardRandomNumbersProvider.cs" />
     <Compile Include="UserInterface\Console\BalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\GreenBalloonDrawingManager.cs" />
     <Compile Include="UserInterface\Console\PoppedBalloonDrawingManager.cs" />
@@ -70,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

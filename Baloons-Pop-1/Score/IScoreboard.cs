@@ -1,9 +1,9 @@
-namespace BalloonsPopsGame
+namespace BalloonsPopsGame.Score
 {
     using System;
     using System.Collections.Generic;
 
-    public interface IScoreBoard
+    public interface IScoreboard
     {
         IList<Tuple<string, int>> Players { get; }
 

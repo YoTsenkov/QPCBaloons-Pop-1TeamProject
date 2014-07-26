@@ -1,14 +1,14 @@
-﻿namespace BalloonsPopsGame
+﻿namespace BalloonsPopsGame.Score
 {
     using System;
     using System.Linq;
     using System.Collections.Generic;
 
-    public class ScoreBoard : IScoreBoard
+    public class Scoreboard : IScoreboard
     {
         private IList<Tuple<string, int>> players;
 
-        public ScoreBoard(IList<Tuple<string, int>> players)
+        public Scoreboard(IList<Tuple<string, int>> players)
         {
             this.Players = players;
         }

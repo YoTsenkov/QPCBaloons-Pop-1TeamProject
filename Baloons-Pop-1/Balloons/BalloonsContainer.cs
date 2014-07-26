@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using Exceptions;
+    using RandomProvider;
 
     public class BalloonsContainer : IBalloonsContainer, IEnumerable<Balloon>
     {

@@ -3,6 +3,7 @@
     using System;
     using Balloons;
     using System.Text;
+    using Score;
 
     public class ConsoleUIHandler : UIHandler
     {
@@ -32,7 +33,7 @@
             Console.WriteLine(message, firstPlaceholder, secondPlaceholder);
         }
 
-        public override void DisplayScoreboard(IScoreBoard scoreboard)
+        public override void DisplayScoreboard(IScoreboard scoreboard)
         {
             if (scoreboard.Players.Count == 0)
             {
