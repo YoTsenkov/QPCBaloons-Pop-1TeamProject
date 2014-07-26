@@ -5,6 +5,8 @@ namespace BalloonsPopsGame.Balloons
 
     public interface IBalloonsContainer : IEnumerable<Balloon>
     {
+        Balloon[,] Balloons { get; }
+
         bool IsEmpty();
 
         void PopBaloons(int row, int column);

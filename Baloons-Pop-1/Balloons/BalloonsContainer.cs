@@ -60,14 +60,14 @@
             }
         }
 
-        private Balloon[,] Balloons
+        public Balloon[,] Balloons
         {
             get
             {
-                return this.balloons;
+                return (Balloon[,])this.balloons.Clone();
             }
 
-            set
+            private set
             {
                 if (value.GetLength(0) != NumberOfRows)
                 {
@@ -98,33 +98,38 @@
 
         public void PopBaloons(int row, int column)
         {
+            this.PopBaloons(this.balloons, row, column);
+        }
+
+        public void PopBaloons(Balloon[,] balloons, int row, int column)
+        {
             if (row > NumberOfRows || column > NumberOfColumns)
             {
                 throw new InvalidRowOrColumnException();
             }
-            else if (this.Balloons[row, column] == this.Factory.GetBalloon(BalloonType.Popped))
+            else if (this.balloons[row, column] == this.Factory.GetBalloon(BalloonType.Popped))
             {
                 throw new MissingBalloonException();
             }
 
-            var state = this.Balloons[row, column];
+            var state = balloons[row, column];
             int top = FindTopPoppingRange(row, column);
             int bottom = FindBottomPoppingRange(row, column);
             int left = FindLeftPoppingRange(row, column);
             int right = FindRightPoppingRange(row, column);
-            
+
             for (int currentCol = left; currentCol <= right; currentCol++)
             {
                 if (row == 1)
                 {
-                    this.Balloons[row, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
+                    balloons[row, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
                 }
                 else
                 {
                     for (int currentRow = row; currentRow > 0; currentRow--)
                     {
-                        this.Balloons[currentRow, currentCol] = this.Balloons[currentRow - 1, currentCol];
-                        this.Balloons[currentRow - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
+                        balloons[currentRow, currentCol] = balloons[currentRow - 1, currentCol];
+                        balloons[currentRow - 1, currentCol] = this.Factory.GetBalloon(BalloonType.Popped);
                     }
                 }
             }
@@ -133,17 +138,17 @@
             {
                 for (int i = top; i > 0; --i)
                 {
-                    this.Balloons[i + bottom - top, column] = this.Balloons[i, column];
-                    this.Balloons[i, column] = this.Factory.GetBalloon(BalloonType.Popped);
+                    balloons[i + bottom - top, column] = balloons[i, column];
+                    balloons[i, column] = this.Factory.GetBalloon(BalloonType.Popped);
                 }
 
                 if (bottom - top > top - 1)
                 {
                     for (int i = top; i <= bottom; i++)
                     {
-                        if (this.Balloons[i, column] == state)
+                        if (balloons[i, column] == state)
                         {
-                            this.Balloons[i, column] = this.Factory.GetBalloon(BalloonType.Popped);
+                            balloons[i, column] = this.Factory.GetBalloon(BalloonType.Popped);
                         }
                     }
                 }
@@ -159,7 +164,7 @@
                 for (int j = 0; j < NumberOfColumns; j++)
                 {
                     Balloon newBalloon = this.Factory.GetBalloon((BalloonType)this.RandomNumberProvider.GetRandomNumber(0, NumberOfBalloonColors - 1));
-                    this.Balloons[i, j] = newBalloon;
+                    this.balloons[i, j] = newBalloon;
                 }
             }
 
@@ -172,7 +177,7 @@
             {
                 for (int col = 0; col < NumberOfColumns; col++)
                 {
-                    this.Balloons[row, col] = this.Factory.GetBalloon(BalloonType.Popped);
+                    this.balloons[row, col] = this.Factory.GetBalloon(BalloonType.Popped);
                 }
             }
         }
@@ -183,7 +188,7 @@
             {
                 for (int col = 0; col < NumberOfColumns; col++)
                 {
-                    yield return this.Balloons[row, col].Clone();
+                    yield return this.balloons[row, col].Clone();
                 }
             }
         }
@@ -203,10 +208,10 @@
 
         private int FindTopPoppingRange(int row, int column)
         {
-            var state = this.Balloons[row, column];
+            var state = this.balloons[row, column];
             int top = row;
 
-            while (top > 0 && (this.Balloons[top - 1, column] == state))
+            while (top > 0 && (this.balloons[top - 1, column] == state))
             {
                 top--;
             }
@@ -216,10 +221,10 @@
 
         private int FindBottomPoppingRange(int row, int column)
         {
-            var state = this.Balloons[row, column];
+            var state = this.balloons[row, column];
             int bottom = row;
 
-            while (bottom < (NumberOfRows - 1) && this.Balloons[bottom + 1, column] == state)
+            while (bottom < (NumberOfRows - 1) && this.balloons[bottom + 1, column] == state)
             {
                 bottom++;
             }
@@ -229,10 +234,10 @@
 
         private int FindRightPoppingRange(int row, int column)
         {
-            var state = this.Balloons[row, column];
+            var state = this.balloons[row, column];
             int right = column;
 
-            while (right < (NumberOfColumns - 1) && this.Balloons[row, right + 1] == state)
+            while (right < (NumberOfColumns - 1) && this.balloons[row, right + 1] == state)
             {
                 right++;
             }
@@ -242,15 +247,15 @@
 
         private int FindLeftPoppingRange(int row, int column)
         {
-            var state = this.Balloons[row, column];
+            var state = this.balloons[row, column];
             int left = column;
 
-            while (left > 0 && this.Balloons[row, left - 1] == state)
+            while (left > 0 && this.balloons[row, left - 1] == state)
             {
                 left--;
             }
 
             return left;
-        }        
+        }
     }
 }
