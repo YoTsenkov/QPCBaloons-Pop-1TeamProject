@@ -2,6 +2,7 @@
 {
     using System;
     using BalloonsPopsGame.Balloons;
+    using BalloonsPopsGame.Exceptions;
     using BalloonsPopsGame.RandomProvider;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Telerik.JustMock;
@@ -82,12 +83,226 @@
                 for (int j = 0; j < result.GetLength(1); j++)
                 {
                     enumerator.MoveNext();
-                    result[i, j] = enumerator.Current;                    
+                    result[i, j] = enumerator.Current;
                 }
             }
 
             Assert.IsTrue(AreMatrixesEqual(result, container.Balloons), "GetEnumerator doesn't work correctly!");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidRowOrColumnException))]
+        public void TestPoppingOutOfRangeBalloon()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 3, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(MissingBalloonException))]
+        public void TestPoppingMissingBalloonException()
+        {
+
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 1, 1);
+        }
+
+        [TestMethod]
+        public void TestPoppingSingleBalloonWithoutShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 0, 1);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for single balloon popping without shifting!");
+        }
+
+        [TestMethod]
+        public void TestPoppingSingleBalloonWithShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 1, 1);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for single balloon popping with shifting!");
+        }
+
+        [TestMethod]
+        public void TestPoppingMultipleHorizontalBalloonsWithoutShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 0, 1);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Popped), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Popped)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for multiple horizontal balloons popping without shifting!");
+        }
+
+        [TestMethod]
+        public void TestPoppingMultipleHorizontalBalloonsWithShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 1, 1);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Popped), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Popped)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for multiple horizontal balloons popping with shifting!");
+        }
+
+        [TestMethod]
+        public void TestPoppingMultipleVerticleBalloonsWithoutShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Red),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 1, 1);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for multiple verticle balloons popping without shifting!");
+        }
+
+        [TestMethod]
+        public void TestPoppingMultipleVerticleBalloonsWithShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Yellow),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Red),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 4, 1);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Yellow)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Red)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Yellow),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for multiple verticle balloons popping with shifting!");
+        }
+
+        [TestMethod]
+        public void TestMultipleBalloonsPoppingBothDirectionWithoutShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Green)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            container.PopBaloons(balloons, 0, 0);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Popped), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Green)},
+                {new Balloon(BalloonType.Popped), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Yellow), new Balloon(BalloonType.Red),new Balloon(BalloonType.Yellow)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for multiple balloons popping both directions without shifting!");
+        }
+
+        [TestMethod]
+        public void TestMultipleBalloonsPoppingBothDirectionsWithShifting()
+        {
+            var container = new BalloonsContainer();
+            Balloon[,] balloons = 
+            {
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Green)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Blue)},
+                {new Balloon(BalloonType.Blue), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Blue)},
+            };
+
+            container.PopBaloons(balloons, 2, 2);
+            Balloon[,] expectedOutput = 
+            {
+                {new Balloon(BalloonType.Popped), new Balloon(BalloonType.Popped),new Balloon(BalloonType.Popped)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Red),new Balloon(BalloonType.Popped)},
+                {new Balloon(BalloonType.Red), new Balloon(BalloonType.Blue),new Balloon(BalloonType.Green)},
+            };
+
+            Assert.IsTrue(AreMatrixesEqual(expectedOutput, balloons), "Balloons popping doesn't work for multiple balloons popping both directions with shifting!");
+        }
+
 
         private BalloonsContainer ArrangeContainer(BalloonType type)
         {
