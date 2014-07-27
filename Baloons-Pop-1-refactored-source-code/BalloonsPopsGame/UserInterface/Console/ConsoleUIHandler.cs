@@ -1,0 +1,113 @@
+﻿namespace BalloonsPopsGame.UserInterface.Console
+{
+    using System;
+    using System.Text;
+    using Balloons;
+    using Score;    
+
+    public class ConsoleUIHandler : UIHandler
+    {
+        public ConsoleUIHandler(IBalloonsContainer container)
+            : base(container)
+        {
+        }
+
+        public override string ReadInput()
+        {
+            var input = Console.ReadLine();
+            return input;
+        }
+
+        public override void DisplayMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        public override void DisplayMessage(string message, object placeholder)
+        {
+            Console.WriteLine(message, placeholder);
+        }
+
+        public override void DisplayMessage(string message, object firstPlaceholder, object secondPlaceholder)
+        {
+            Console.WriteLine(message, firstPlaceholder, secondPlaceholder);
+        }
+
+        public override void DisplayScoreboard(IScoreboard scoreboard)
+        {
+            if (scoreboard.Players.Count == 0)
+            {
+                this.DisplayMessage(UIMessages.EmptyScoreBoard);
+            }
+            else
+            {
+                this.DisplayMessage(UIMessages.Scoreboard);
+
+                foreach (var player in scoreboard.Players)
+                {
+                    this.DisplayMessage(UIMessages.PlayerMoves, player.Item1, player.Item2);
+                }
+            }
+        }
+
+        public override void DisplayBalloons()
+        {
+            this.DrawUpperBorder();
+            int counter = 0;
+            foreach (var balloon in this.Container)
+            {
+                if (counter % BalloonsContainer.NumberOfColumns == 0)
+                {
+                    Console.Write((counter / BalloonsContainer.NumberOfColumns).ToString() + " | ");
+                }
+
+                var balloonDrawingManager = BalloonDrawingManagerFactory.GetBalloonDrawingManager(balloon.Type);
+                balloonDrawingManager.Draw();
+
+                if (counter % BalloonsContainer.NumberOfColumns == BalloonsContainer.NumberOfColumns - 1)
+                {
+                    Console.WriteLine("| ");
+                }
+
+                counter++;
+            }
+
+            this.DrawBottomBorder();
+        }
+
+        protected override void ContainerChanged(object sender, EventArgs e)
+        {
+            this.DisplayBalloons();
+        }
+
+        private void DrawUpperBorder()
+        {
+            StringBuilder border = new StringBuilder();
+            border.AppendLine();
+            border.Append(new string(' ', 4));
+            for (int i = 0; i < BalloonsContainer.NumberOfColumns; i++)
+            {
+                if (i != BalloonsContainer.NumberOfColumns - 1)
+                {
+                    border.Append(i + " ");
+                }
+                else
+                {
+                    border.AppendLine(i.ToString());
+                }
+            }
+
+            border.Append(new string(' ', 4));
+            border.Append(new string('-', BalloonsContainer.NumberOfColumns * 2));
+            Console.WriteLine(border);
+        }
+
+        private void DrawBottomBorder()
+        {
+            StringBuilder border = new StringBuilder();
+            border.Append(new string(' ', 4));
+            border.AppendLine(new string('-', BalloonsContainer.NumberOfColumns * 2));
+            Console.WriteLine(border);
+        }
+    }
+}
