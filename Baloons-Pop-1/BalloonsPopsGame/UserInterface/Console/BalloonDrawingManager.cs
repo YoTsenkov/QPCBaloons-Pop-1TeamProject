@@ -4,6 +4,6 @@
 
     public abstract class BalloonDrawingManager
     {
-        public abstract void Draw(Balloon balloon);
+        public abstract void Draw();
     }
 }

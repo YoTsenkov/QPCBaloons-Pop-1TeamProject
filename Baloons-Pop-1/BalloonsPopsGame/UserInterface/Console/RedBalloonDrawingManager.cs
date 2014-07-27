@@ -5,7 +5,7 @@
 
     public class RedBalloonDrawingManager : BalloonDrawingManager
     {
-        public override void Draw(Balloon balloon)
+        public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(1 + " ");

@@ -62,7 +62,7 @@
                 }
 
                 var balloonDrawingManager = BalloonDrawingManagerFactory.GetBalloonDrawingManager(balloon.Type);
-                balloonDrawingManager.Draw(balloon);
+                balloonDrawingManager.Draw();
 
                 if (counter % BalloonsContainer.NumberOfColumns == BalloonsContainer.NumberOfColumns - 1)
                 {

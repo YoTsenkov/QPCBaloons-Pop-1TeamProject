@@ -5,7 +5,7 @@
 
     public class PoppedBalloonDrawingManager : BalloonDrawingManager
     {
-        public override void Draw(Balloon balloon)
+        public override void Draw()
         {
             Console.Write('-' + " ");
         }
