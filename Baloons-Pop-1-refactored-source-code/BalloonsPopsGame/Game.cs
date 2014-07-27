@@ -6,6 +6,9 @@
     using Score;    
     using UserInterface;
 
+    /// <summary>
+    /// Runs the game and uses the other classes to do his work.
+    /// </summary>
     public class Game : IGame
     {
         private IBalloonsContainer balloons;
@@ -13,6 +16,12 @@
         private UIHandler uiHandler;
         private IScoreboard scoreboard;
 
+        /// <summary>
+        /// Creates instance of the Game class.
+        /// </summary>
+        /// <param name="balloons">the ballons container</param>
+        /// <param name="scoreboard">the scoreboard for keeping the high scores</param>
+        /// <param name="uiHandler">the instance for working with the user interface</param>
         public Game(IBalloonsContainer balloons, IScoreboard scoreboard, UIHandler uiHandler)
         {
             this.NumberOfTurn = 0;
@@ -22,6 +31,11 @@
             this.UIHandler = uiHandler;
         }        
         
+        /// <summary>
+        /// Gets information for the number of turns
+        /// the player has made into the game.
+        /// </summary>
+        /// <value>The property gets/sets the value of the integer field numberOfTurn.</value>
         public int NumberOfTurn
         {
             get
@@ -40,8 +54,16 @@
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the game should finish.
+        /// </summary>        
+        /// <value>Gets/sets boolean value to a hidden field.</value>
         public bool IsGameOver { get;  private set; }
 
+        /// <summary>
+        /// Gets or sets the reference for the balloons container.
+        /// </summary>
+        /// <value>Gets/sets the value of the balloons field.</value>
         private IBalloonsContainer Balloons
         {
             get
@@ -60,6 +82,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the reference for the UIHandler.
+        /// </summary>
+        /// <value> Gets or sets the value of the uiHandler field.</value>
         private UIHandler UIHandler
         {
             get
@@ -78,6 +104,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the reference for the Scoreboard.
+        /// </summary>
+        /// <value>Gets or sets the value of the scoreboard field.</value>
         private IScoreboard Scoreboard
         {
             get
@@ -96,6 +126,9 @@
             }
         }
 
+        /// <summary>
+        /// Starts the game and waits for user input.
+        /// </summary>
         public void Start()
         {
             this.UIHandler.DisplayMessage(UIMessages.Welcome);
@@ -109,6 +142,10 @@
             }
         }
 
+        /// <summary>
+        /// Parses and executes a command by a given string.
+        /// </summary>
+        /// <param name="command">The string by which the method decides which command to execute.</param>
         public void ExecuteCommand(string command)
         {
             command = command.Trim().ToLower();
@@ -132,6 +169,11 @@
             }
         }
 
+        /// <summary>
+        /// Parses the user input and gives the information
+        /// to the container to pop the balloons.
+        /// </summary>
+        /// <param name="command">The string to parse.</param>
         public void PerformBalloonsPopping(string command)
         {
             string[] rowsAndCols = command.Split();
@@ -181,6 +223,9 @@
             }
         }
 
+        /// <summary>
+        /// Rstarts the game.
+        /// </summary>
         public void Restart()
         {
             this.Balloons.Empty();

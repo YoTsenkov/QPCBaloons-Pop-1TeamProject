@@ -4,21 +4,35 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// A class for high score storage.
+    /// </summary>
     public class Scoreboard : IScoreboard
     {
         public const int MaximumNumberOfResults = 5;
         private IList<Tuple<string, int>> players;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Scoreboard"/> class.
+        /// </summary>
         public Scoreboard()
             : this(new List<Tuple<string, int>>())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Scoreboard"/> class.
+        /// </summary>
+        /// <param name="players">A list of players in the high score table.</param>
         public Scoreboard(IList<Tuple<string, int>> players)
         {
             this.Players = players;
         }
 
+        /// <summary>
+        /// Gets the players in the high score.
+        /// </summary>
+        /// <value>Gets or sets the value of the players filed.</value>
         public IList<Tuple<string, int>> Players
         {
             get
@@ -37,6 +51,11 @@
             }
         }
 
+        /// <summary>
+        /// Updates the scoreboard by given player name and his number of turns.
+        /// </summary>
+        /// <param name="playerName">The player name.</param>
+        /// <param name="numberOfTurns">The number of turns.</param>
         public void Update(string playerName, int numberOfTurns)
         {
             if (this.Players.Count < MaximumNumberOfResults)
@@ -52,6 +71,9 @@
             this.Sort();
         }
 
+        /// <summary>
+        /// Sorts the high score table by the players number of turns.
+        /// </summary>
         private void Sort()
         {
             int smallestElementIndex = -1;
@@ -72,6 +94,11 @@
             }
         }
 
+        /// <summary>
+        /// Adds a player to the high score table.
+        /// </summary>
+        /// <param name="playerName">The player name.</param>
+        /// <param name="numberOfTurns">The player number of turns.</param>
         private void AddPlayer(string playerName, int numberOfTurns)
         {
             Tuple<string, int> a = Tuple.Create<string, int>(playerName, numberOfTurns);

@@ -6,6 +6,9 @@
     using Exceptions;
     using RandomProvider;
 
+    /// <summary>
+    /// A class for storing all the balloons in the game.
+    /// </summary>
     public class BalloonsContainer : IBalloonsContainer, IEnumerable<Balloon>
     {
         public const int NumberOfRows = 5;
@@ -16,11 +19,19 @@
         private IBalloonFactory factory;
         private IRandomNumbersProvider randomNumberProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BalloonsContainer"/> class.
+        /// </summary>
         public BalloonsContainer()
             : this(new BalloonFactory(), StandardRandomNumbersProvider.Instance)
         { 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BalloonsContainer"/> class.
+        /// </summary>
+        /// <param name="factory">The Flyweight factory.</param>
+        /// <param name="randomNumberProvider">The random number generator.</param>
         public BalloonsContainer(IBalloonFactory factory, IRandomNumbersProvider randomNumberProvider)
         {
             this.Balloons = new Balloon[NumberOfRows, NumberOfColumns];
@@ -30,6 +41,10 @@
 
         public event EventHandler ContainerChanged;
 
+        /// <summary>
+        /// Gets the stored balloons.
+        /// </summary>
+        /// <value>Gets or sets the value of the balloons filed.</value>
         public Balloon[,] Balloons
         {
             get
@@ -53,6 +68,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the random number generator.
+        /// </summary>
+        /// <value>Gets or sets the value of the randomNumberProvider field.</value>
         private IRandomNumbersProvider RandomNumberProvider
         {
             get
@@ -71,6 +90,10 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the reference to the Flyweight factory.
+        /// </summary>
+        /// <value>Gets or sets the value of the factory field.</value>
         private IBalloonFactory Factory
         {
             get
@@ -89,6 +112,10 @@
             }
         }        
 
+        /// <summary>
+        /// Gets result whether the container is empty.
+        /// </summary>
+        /// <returns>The answer.</returns>
         public bool IsEmpty()
         {
             foreach (var balloon in this.Balloons)
@@ -102,11 +129,21 @@
             return true;
         }
 
+        /// <summary>
+        /// Pop balloons by given row and column.
+        /// </summary>
+        /// <param name="row">The given row.</param>
+        /// <param name="column">The given column.</param>
         public void PopBaloons(int row, int column)
         {
             this.PopBaloons(this.balloons, row, column);
         }
 
+        /// <summary>
+        /// Pop balloons by given row and column.
+        /// </summary>
+        /// <param name="row">The given row.</param>
+        /// <param name="column">The given column.</param>
         public void PopBaloons(Balloon[,] balloons, int row, int column)
         {
             if (row > balloons.GetLength(0) - 1 || column > balloons.GetLength(1) - 1)
@@ -163,6 +200,9 @@
             this.OnContainerChanged();
         }
 
+        /// <summary>
+        /// Fills the container.
+        /// </summary>
         public void Fill()
         {
             for (int i = 0; i < NumberOfRows; i++)
@@ -177,6 +217,9 @@
             this.OnContainerChanged();
         }
 
+        /// <summary>
+        /// Empties the container.
+        /// </summary>
         public void Empty()
         {
             for (int row = 0; row < NumberOfRows; row++)
@@ -188,6 +231,10 @@
             }
         }
 
+        /// <summary>
+        /// Implements the Iterator pattern for the class.
+        /// </summary>
+        /// <returns>The current balloon.</returns>
         public IEnumerator<Balloon> GetEnumerator()
         {
             for (int row = 0; row < NumberOfRows; row++)
@@ -199,11 +246,17 @@
             }
         }
 
+        /// <summary>
+        /// Implements the Iterator pattern for the class.
+        /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// Method called when the ContainerChanged event fires.
+        /// </summary>
         protected void OnContainerChanged()
         {
             if (this.ContainerChanged != null)
@@ -212,6 +265,13 @@
             }
         }
 
+        /// <summary>
+        /// Finds the top balloon popping range.
+        /// </summary>
+        /// <param name="balloons">The balloons to pop</param>
+        /// <param name="row">The row.</param>
+        /// <param name="column">The column</param>
+        /// <returns>The range.</returns>
         private int FindTopPoppingRange(Balloon[,] balloons, int row, int column)
         {
             var state = balloons[row, column];
@@ -225,6 +285,13 @@
             return top;
         }
 
+        /// <summary>
+        /// Finds the bottom balloon popping range.
+        /// </summary>
+        /// <param name="balloons">The balloons to pop</param>
+        /// <param name="row">The row.</param>
+        /// <param name="column">The column</param>
+        /// <returns>The range.</returns>
         private int FindBottomPoppingRange(Balloon[,] balloons, int row, int column)
         {
             var state = balloons[row, column];
@@ -238,6 +305,13 @@
             return bottom;
         }
 
+        /// <summary>
+        /// Finds the right balloon popping range.
+        /// </summary>
+        /// <param name="balloons">The balloons to pop</param>
+        /// <param name="row">The row.</param>
+        /// <param name="column">The column</param>
+        /// <returns>The range.</returns>
         private int FindRightPoppingRange(Balloon[,] balloons, int row, int column)
         {
             var state = balloons[row, column];
@@ -251,6 +325,13 @@
             return right;
         }
 
+        /// <summary>
+        /// Finds the left balloon popping range.
+        /// </summary>
+        /// <param name="balloons">The balloons to pop</param>
+        /// <param name="row">The row.</param>
+        /// <param name="column">The column</param>
+        /// <returns>The range.</returns>
         private int FindLeftPoppingRange(Balloon[,] balloons, int row, int column)
         {
             var state = balloons[row, column];

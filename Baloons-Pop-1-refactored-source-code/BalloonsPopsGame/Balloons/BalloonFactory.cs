@@ -3,10 +3,21 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// A factory implementing the Flyweight pattern.
+    /// </summary>
     public class BalloonFactory : IBalloonFactory
     {
+        /// <summary>
+        /// A dictionary where already created balloons are stored.
+        /// </summary>
         private readonly IDictionary<BalloonType, Balloon> balloons = new Dictionary<BalloonType, Balloon>();
 
+        /// <summary>
+        /// Return a Balloon instance by given BalloonType.
+        /// </summary>
+        /// <param name="key">The given BalloonType.</param>
+        /// <returns>The instance.</returns>
         public Balloon GetBalloon(BalloonType key)
         {
             Balloon balloon = null;

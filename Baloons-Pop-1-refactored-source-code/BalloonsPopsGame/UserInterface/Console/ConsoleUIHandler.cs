@@ -5,34 +5,64 @@
     using Balloons;
     using Score;    
 
+    /// <summary>
+    /// Works with the Console to create user interface.
+    /// </summary>
     public class ConsoleUIHandler : UIHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConsoleUIHandler"/> class.
+        /// </summary>
+        /// <param name="container">The balloons container which will be displayed later on.</param>
         public ConsoleUIHandler(IBalloonsContainer container)
             : base(container)
         {
         }
 
+        /// <summary>
+        /// Reads and input string from the console.
+        /// </summary>
+        /// <returns>The read input string.</returns>
         public override string ReadInput()
         {
             var input = Console.ReadLine();
             return input;
         }
 
+        /// <summary>
+        /// Displays a given message on the console.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
         public override void DisplayMessage(string message)
         {
             Console.WriteLine(message);
         }
 
-        public override void DisplayMessage(string message, object placeholder)
+        /// <summary>
+        /// Displays a given message to the console replacing the placeholder with the argument.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="argument">The argument to replace the placeholder.</param>
+        public override void DisplayMessage(string message, object argument)
         {
-            Console.WriteLine(message, placeholder);
+            Console.WriteLine(message, argument);
         }
 
-        public override void DisplayMessage(string message, object firstPlaceholder, object secondPlaceholder)
+        /// <summary>
+        /// Displays a given message to the console replacing the placeholders with the arguments.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="firstArgument">The first argument to replace the first placeholder.</param>
+        /// <param name="secondArgument">The second argument to replace the second placeholder.</param>
+        public override void DisplayMessage(string message, object firstArgument, object secondArgument)
         {
-            Console.WriteLine(message, firstPlaceholder, secondPlaceholder);
+            Console.WriteLine(message, firstArgument, secondArgument);
         }
 
+        /// <summary>
+        /// Display all the players results by a given scoreboard.
+        /// </summary>
+        /// <param name="scoreboard">The given scoreboard.</param>
         public override void DisplayScoreboard(IScoreboard scoreboard)
         {
             if (scoreboard.Players.Count == 0)
@@ -50,6 +80,9 @@
             }
         }
 
+        /// <summary>
+        /// Displays the balloons from the container.
+        /// </summary>
         public override void DisplayBalloons()
         {
             this.DrawUpperBorder();
@@ -75,11 +108,19 @@
             this.DrawBottomBorder();
         }
 
+        /// <summary>
+        /// The method that is called when the event is fired.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">Event arguments.</param>
         protected override void ContainerChanged(object sender, EventArgs e)
         {
             this.DisplayBalloons();
         }
 
+        /// <summary>
+        /// Draws the upper border of the container.
+        /// </summary>
         private void DrawUpperBorder()
         {
             StringBuilder border = new StringBuilder();
@@ -102,6 +143,9 @@
             Console.WriteLine(border);
         }
 
+        /// <summary>
+        /// Draws the bottom border of the container.
+        /// </summary>
         private void DrawBottomBorder()
         {
             StringBuilder border = new StringBuilder();

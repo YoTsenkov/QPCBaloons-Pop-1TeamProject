@@ -3,8 +3,16 @@
     using System;
     using Balloons;
 
+    /// <summary>
+    /// Simple Factory for creating balloons by given <see cref="BallonType"/>.
+    /// </summary>
     public class BalloonDrawingManagerFactory
     {
+        /// <summary>
+        /// Returns concrete implementation of the <see cref="BalloonDrawingManager"/> class by given <see cref="BalloonType"/>.
+        /// </summary>
+        /// <param name="balloonType">The type of the balloon.</param>
+        /// <returns>A implementation of BalloonDrawingManager.</returns>
         public static BalloonDrawingManager GetBalloonDrawingManager(BalloonType balloonType)
         {
             BalloonDrawingManager result;

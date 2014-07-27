@@ -1,5 +1,8 @@
 ﻿namespace BalloonsPopsGame.UserInterface
 {
+    /// <summary>
+    /// A structure for storage of all the messages used by the user interface.
+    /// </summary>
     public struct UIMessages
     {
         public const string GoodBye = "Good bye!";
