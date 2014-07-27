@@ -98,10 +98,10 @@
 
         public void Start()
         {
-            this.UIHandler.DisplayMessage(UIMessages.WelcomeMessage);
-            this.UIHandler.DisplayMessage(UIMessages.InstructionsMessage);
+            this.UIHandler.DisplayMessage(UIMessages.Welcome);
+            this.UIHandler.DisplayMessage(UIMessages.Instructions);
             this.Balloons.Fill();
-            this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
+            this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumn);
 
             while (!this.IsGameOver)
             {
@@ -113,16 +113,16 @@
         {
             command = command.Trim().ToLower();
 
-            if (command == UIMessages.ExitMessage)
+            if (command == UIMessages.Exit)
             {
                 this.IsGameOver = true;
-                this.UIHandler.DisplayMessage(UIMessages.GoodByeMessage);
+                this.UIHandler.DisplayMessage(UIMessages.GoodBye);
             }
-            else if (command == UIMessages.RestartMessage)
+            else if (command == UIMessages.Restart)
             {
                 this.Restart();
             }
-            else if (command == UIMessages.TopMessage)
+            else if (command == UIMessages.Top)
             {
                 this.UIHandler.DisplayScoreboard(this.Scoreboard);
             }
@@ -137,7 +137,7 @@
             string[] rowsAndCols = command.Split();
             if (rowsAndCols.Length != 2)
             {
-                this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
+                this.UIHandler.DisplayMessage(UIMessages.InvalidMove);
                 return;
             }
 
@@ -156,28 +156,28 @@
                 }
                 catch (InvalidRowOrColumnException)
                 {
-                    this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.InvalidMove);
                 }
                 catch (MissingBalloonException)
                 {
-                    this.UIHandler.DisplayMessage(UIMessages.MissingBalloonMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.MissingBalloon);
                 }
 
                 if (shouldRestart)
                 {
-                    this.UIHandler.DisplayMessage(UIMessages.PoppedAllBaloonsMessage, this.numberOfTurn);
-                    this.UIHandler.DisplayMessage(UIMessages.AskForNameMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.PoppedAllBaloons, this.numberOfTurn);
+                    this.UIHandler.DisplayMessage(UIMessages.AskForName);
                     this.Scoreboard.Update(this.UIHandler.ReadInput(), this.NumberOfTurn);
                     this.Restart();
                 }
                 else
                 {
-                    this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
+                    this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumn);
                 }
             }
             else
             {
-                this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
+                this.UIHandler.DisplayMessage(UIMessages.InvalidMove);
             }
         }
 
@@ -186,7 +186,7 @@
             this.Balloons.Empty();
             this.Balloons.Fill();
             this.NumberOfTurn = 0;
-            this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
+            this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumn);
         }
     }
 }

@@ -37,15 +37,15 @@
         {
             if (scoreboard.Players.Count == 0)
             {
-                this.DisplayMessage(UIMessages.EmptyScoreBoardMessage);
+                this.DisplayMessage(UIMessages.EmptyScoreBoard);
             }
             else
             {
-                this.DisplayMessage(UIMessages.ScoreboardMessage);
+                this.DisplayMessage(UIMessages.Scoreboard);
 
                 foreach (var player in scoreboard.Players)
                 {
-                    this.DisplayMessage(UIMessages.PlayerMovesMessage, player.Item1, player.Item2);
+                    this.DisplayMessage(UIMessages.PlayerMoves, player.Item1, player.Item2);
                 }
             }
         }

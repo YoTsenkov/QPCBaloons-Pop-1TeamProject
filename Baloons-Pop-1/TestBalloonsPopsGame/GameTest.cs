@@ -44,8 +44,8 @@
             var scoreBoard = Mock.Create<IScoreboard>();
             var uiHandler = Mock.Create<UIHandler>();
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.GoodByeMessage)).OccursOnce();
-            game.ExecuteCommand(UIMessages.ExitMessage);
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.GoodBye)).OccursOnce();
+            game.ExecuteCommand(UIMessages.Exit);
 
             Mock.Assert(uiHandler);
             Assert.IsTrue(game.IsGameOver, "Exit command doesn't finish the game!");
@@ -60,8 +60,8 @@
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
             Mock.Arrange(() => balloonsContainer.Empty()).InOrder();
             Mock.Arrange(() => balloonsContainer.Fill()).InOrder();
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage)).OccursOnce();
-            game.ExecuteCommand(UIMessages.RestartMessage);
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.EnterRowAndColumn)).OccursOnce();
+            game.ExecuteCommand(UIMessages.Restart);
 
             Mock.Assert(balloonsContainer);
             Mock.Assert(uiHandler);
@@ -77,7 +77,7 @@
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
             Mock.Arrange(() => uiHandler.DisplayScoreboard(scoreBoard)).OccursOnce();
 
-            game.ExecuteCommand(UIMessages.TopMessage);
+            game.ExecuteCommand(UIMessages.Top);
             Mock.Assert(uiHandler);
         }
 
@@ -88,7 +88,7 @@
             var scoreBoard = Mock.Create<IScoreboard>();
             var uiHandler = Mock.Create<UIHandler>();
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.InvalidMoveMessage)).OccursOnce();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.InvalidMove)).OccursOnce();
 
             game.PerformBalloonsPopping("12 3 2");
             Mock.Assert(uiHandler);
@@ -101,7 +101,7 @@
             var scoreBoard = Mock.Create<IScoreboard>();
             var uiHandler = Mock.Create<UIHandler>();
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.InvalidMoveMessage)).OccursOnce();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.InvalidMove)).OccursOnce();
 
             game.PerformBalloonsPopping("ala bala");
             Mock.Assert(uiHandler);
@@ -116,7 +116,7 @@
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
             Mock.Arrange(() => balloonsContainer.IsEmpty()).Returns(false);
             Mock.Arrange(() => balloonsContainer.PopBaloons(Arg.IsAny<int>(), Arg.IsAny<int>())).OccursOnce();
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage)).OccursOnce();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.EnterRowAndColumn)).OccursOnce();
             var oldNumberOfTurn = game.NumberOfTurn;
 
             game.PerformBalloonsPopping("2 3");
@@ -133,7 +133,7 @@
             var uiHandler = Mock.Create<UIHandler>();
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
             Mock.Arrange(() => balloonsContainer.PopBaloons(Arg.IsAny<int>(), Arg.IsAny<int>())).Throws(new InvalidRowOrColumnException());
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.InvalidMoveMessage)).OccursOnce();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.InvalidMove)).OccursOnce();
 
             game.PerformBalloonsPopping("5 3");
             Mock.Assert(uiHandler);
@@ -147,7 +147,7 @@
             var uiHandler = Mock.Create<UIHandler>();
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
             Mock.Arrange(() => balloonsContainer.PopBaloons(Arg.IsAny<int>(), Arg.IsAny<int>())).Throws(new MissingBalloonException());
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.MissingBalloonMessage)).OccursOnce();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.MissingBalloon)).OccursOnce();
 
             game.PerformBalloonsPopping("5 3");
             Mock.Assert(uiHandler);
@@ -162,12 +162,12 @@
             var game = new Game(balloonsContainer, scoreBoard, uiHandler);
             Mock.Arrange(() => balloonsContainer.PopBaloons(Arg.IsAny<int>(), Arg.IsAny<int>())).DoNothing();
             Mock.Arrange(() => balloonsContainer.IsEmpty()).Returns(true);
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.PoppedAllBaloonsMessage, Arg.IsAny<int>())).InOrder();
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.AskForNameMessage)).InOrder();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.PoppedAllBaloons, Arg.IsAny<int>())).InOrder();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.AskForName)).InOrder();
             Mock.Arrange(() => scoreBoard.Update(Arg.IsAny<string>(), Arg.IsAny<int>())).OccursOnce();
             Mock.Arrange(() => balloonsContainer.Empty()).InOrder();
             Mock.Arrange(() => balloonsContainer.Fill()).InOrder();
-            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage)).InOrder();
+            Mock.Arrange(() => uiHandler.DisplayMessage(UIMessages.EnterRowAndColumn)).InOrder();
 
             game.PerformBalloonsPopping("2 2");
             Mock.Assert(balloonsContainer);
