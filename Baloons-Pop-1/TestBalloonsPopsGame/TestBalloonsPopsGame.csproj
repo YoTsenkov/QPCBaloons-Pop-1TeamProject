@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Telerik.JustMock">
+      <HintPath>..\packages\JustMock.2014.2.722.1\lib\Net35\Telerik.JustMock.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -55,12 +58,16 @@
     <Compile Include="StandardRandomNumbersProviderTest.cs" />
     <Compile Include="BalloonFactoryTest.cs" />
     <Compile Include="BalloonTest.cs" />
+    <Compile Include="BalloonsContainerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BalloonsPopsGame\BalloonsPopsGame.csproj">
       <Project>{8940ef8b-a71d-4f14-8888-1aae9acefdc6}</Project>
       <Name>BalloonsPopsGame</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

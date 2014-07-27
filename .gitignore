@@ -66,3 +66,4 @@ ClientBin/
 .JustCode/
 *.settings.xml
 TestResults/
+packages/
