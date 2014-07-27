@@ -62,6 +62,7 @@
     <Compile Include="GameTest.cs" />
     <Compile Include="BalloonDrawingManagerFactoryTest.cs" />
     <Compile Include="BalloonDrawingManagerTest.cs" />
+    <Compile Include="ConsoleUIHandlerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BalloonsPopsGame\BalloonsPopsGame.csproj">

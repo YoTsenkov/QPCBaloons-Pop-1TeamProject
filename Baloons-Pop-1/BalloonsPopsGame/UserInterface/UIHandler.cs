@@ -44,6 +44,6 @@
             }
         }
 
-        protected abstract void DisplayBalloons();
+        public abstract void DisplayBalloons();
     }
 }

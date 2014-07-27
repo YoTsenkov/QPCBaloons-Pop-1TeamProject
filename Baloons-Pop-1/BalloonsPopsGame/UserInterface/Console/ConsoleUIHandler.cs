@@ -50,7 +50,7 @@
             }
         }
 
-        protected override void DisplayBalloons()
+        public override void DisplayBalloons()
         {
             this.DrawUpperBorder();
             int counter = 0;
