@@ -6,7 +6,7 @@
     using UserInterface;
     using Score;
 
-    class Game : IGame
+    public class Game : IGame
     {
         private IBalloonsContainer balloons;
         private int numberOfTurn;
@@ -83,7 +83,7 @@
                 return this.numberOfTurn;
             }
 
-            set
+            private set
             {
                 if (value < 0)
                 {
@@ -94,7 +94,7 @@
             }
         }
 
-        public bool IsGameOver { get; set; }
+        public bool IsGameOver { get;  private set; }
 
         public void Start()
         {
@@ -138,6 +138,7 @@
             if (rowsAndCols.Length != 2)
             {
                 this.UIHandler.DisplayMessage(UIMessages.InvalidMoveMessage);
+                return;
             }
 
             int row, column;
@@ -151,8 +152,7 @@
                 {
                     this.balloons.PopBaloons(row, column);
                     this.NumberOfTurn++;
-                    shouldRestart = this.balloons.IsEmpty();
-                    this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
+                    shouldRestart = this.balloons.IsEmpty();                    
                 }
                 catch (InvalidRowOrColumnException)
                 {
@@ -169,6 +169,10 @@
                     this.UIHandler.DisplayMessage(UIMessages.AskForNameMessage);
                     this.Scoreboard.Update(this.UIHandler.ReadInput(), this.NumberOfTurn);
                     this.Restart();
+                }
+                else
+                {
+                    this.UIHandler.DisplayMessage(UIMessages.EnterRowAndColumnMessage);
                 }
             }
             else

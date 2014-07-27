@@ -2,9 +2,9 @@ namespace BalloonsPopsGame
 {
     public interface IGame
     {
-        int NumberOfTurn { get; set; }
+        int NumberOfTurn { get; }
 
-        bool IsGameOver { get; set; }
+        bool IsGameOver { get; }
 
         void Start();
 
