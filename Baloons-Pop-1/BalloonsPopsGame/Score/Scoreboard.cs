@@ -6,6 +6,7 @@
 
     public class Scoreboard : IScoreboard
     {
+        public const int MaximumNumberOfResults = 5;
         private IList<Tuple<string, int>> players;
 
         public Scoreboard()
@@ -37,21 +38,37 @@
 
         public void Update(string playerName, int numberOfTurns)
         {
-            if (this.Players.Count < 5)
+            if (this.Players.Count < MaximumNumberOfResults)
             {
                 this.AddPlayer(playerName, numberOfTurns);
-                return;
             }
-            else
+            else if (this.Players.ElementAt<Tuple<string, int>>(this.players.Count - 1).Item2 >= numberOfTurns)
             {
-                if (this.Players.ElementAt<Tuple<string, int>>(this.Players.Count - 1).Item2 >= numberOfTurns)
-                {
-                    this.Players.RemoveAt(this.Players.Count - 1);
-                    this.AddPlayer(playerName, numberOfTurns);
-                }
+                this.players.RemoveAt(this.players.Count - 1);
+                this.AddPlayer(playerName, numberOfTurns);
             }
 
-            this.Players.OrderBy(tuple => tuple.Item2);
+            this.Sort();
+        }
+
+        private void Sort()
+        {
+            int smallestElementIndex = -1;
+            for (int i = 0; i < this.players.Count; i++)
+            {
+                smallestElementIndex = i;
+                for (int j = i + 1; j < this.players.Count; j++)
+                {
+                    if (this.players[smallestElementIndex].Item2 > this.players[j].Item2)
+                    {
+                        smallestElementIndex = j;
+                    }
+                }
+
+                var oldElement = this.players[i];
+                this.players[i] = this.players[smallestElementIndex];
+                this.players[smallestElementIndex] = oldElement;
+            }
         }
 
         private void AddPlayer(string playerName, int numberOfTurns)

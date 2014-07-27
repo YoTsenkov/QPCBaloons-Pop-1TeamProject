@@ -2,7 +2,7 @@
 {
     using System;
 
-    class StandardRandomNumbersProvider : IRandomNumbersProvider
+    public class StandardRandomNumbersProvider : IRandomNumbersProvider
     {
         private static StandardRandomNumbersProvider instance;
         private Random randomGenerator;
